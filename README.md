@@ -1,52 +1,7 @@
-# Cos72
-## Introduction
-Yet Another DAO/Community Tool, BUT: get a Gasless, NFT, Contract Account, and ENS, with your email on any Super Chain.
-Initiate for ETHGlobal Hackathon 2024.
-Build based on:
-Super Chain(Optimism OP Stack)
-ETHPaymaster
-AirAccount
-CometENS （ENS)
+# Background 
+We're curious: why do crypto degens only buy and sell tokens in the market? Why not buy a coffee? Because no coffee supports this: Crypto Coin buys Crypto Coffee. Let’s DO it! How to use it? Download a test version app, and create your account. Get your test ERC20 token(Test USDT token) from the faucet or our builders. A: you are the boss, create an item QR and show it to me. B: I’m the customer, use the app scan your QR, (input the number) check the payment number, and verify my fingerprint, paid! A: You can check your balance in your app account, give me coffee, and keep coins! Anyone can create any items to sell to anyone, that is all. B: Having a cup of coffee is so enjoyable!
 
-## Install
-### Install on local
-All data are saved on-chain. So you can run it anywhere with a one-key install script.
+# Tech stack
+We build it depending on ERC4337 and Paymaster for a gasless user experience. We create a contract account for programming the ERC20 tokens to buy something. We use Push Protocol to notify the boss to check the incoming tokens. We use your fingerprint or Face ID as a passkey to register your account and encrypt your transactions.
 
-```
-git clone git@github.com:AAStarCommunity/Cos72.git
-```
-
-### Access to AAStar version
-AAStar clones and runs a version online. It is open-source and free for all.
-
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-
+<img width="50%" src="https://raw.githubusercontent.com/jhfnetboy/MarkDownImg/main/img/202408182046979.png"/>
