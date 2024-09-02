@@ -1,0 +1,19 @@
+{
+  "name": "push-host",
+  "version": "1.0.0",
+  "description": "stay close with your coffee state",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node ./main.ts"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.2",
+    "@xmtp/broadcast-sdk": "^0.2.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
