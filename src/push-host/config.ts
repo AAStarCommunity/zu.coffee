@@ -1,4 +1,4 @@
-import { config as dotenvConfig } from 'dotenv';
+import { config as dotenvConfig } from "dotenv";
 dotenvConfig();
 
 interface Config {
@@ -6,7 +6,7 @@ interface Config {
 }
 
 const config: Config = {
-  port: parseInt(process.env.PORT || '3000', 10),
+  port: parseInt(process.env.PORT || "3000", 10),
 };
 
 export default config;
