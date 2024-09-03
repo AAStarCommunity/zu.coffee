@@ -50,8 +50,8 @@ class LocalHttpClient {
   }) {
     dio.options = dio.options.copyWith(
       baseUrl: baseUrl,
-      connectTimeout: connectTimeout ?? const Duration(seconds: 5),
-      receiveTimeout: receiveTimeout,
+      connectTimeout: connectTimeout ?? const Duration(seconds: 30),
+      receiveTimeout: receiveTimeout ?? const Duration(minutes: 2),
       headers: headers,
     );
     if (interceptors != null && interceptors.isNotEmpty) {

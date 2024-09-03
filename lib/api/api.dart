@@ -16,7 +16,7 @@ import 'requests/tx_sign_verify_request.dart';
 
 part 'api.g.dart';
 
-@RestApi(baseUrl: 'https://anotherairaccountcommunitynode.onrender.com')
+@RestApi(baseUrl: 'https://airaccount.aastar.io')
 abstract class Api{
   factory Api({Dio? dio, String? baseUrl}) {
     LocalHttpClient().init(baseUrl: baseUrl);

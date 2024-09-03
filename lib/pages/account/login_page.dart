@@ -1,15 +1,13 @@
 import 'dart:async';
-
-import 'package:HexagonWarrior/extensions/extensions.dart';
 import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/pages/main_page.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../utils/validate_util.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -55,6 +53,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _emailCtrl.addListener(() {
+      if(mounted && !isNotNull(_emailCtrl.text)) setState(() {
+        _pinCodeVisible = false;
+      });
+    });
+  }
+
+  @override
   void dispose() {
     _emailCtrl.dispose();
     _pinCodeCtrl.dispose();
@@ -78,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
           Form(key: _emailFormKey, child: TextFormField(controller: _emailCtrl, decoration: decoration, validator: (value) {
             return _validateEmail(value);
           }).marginOnly(top: 80)),
-          Form(key: _pinCodeFormKey, child: PinCodeTextField(
+          if(_pinCodeVisible)Form(key: _pinCodeFormKey, child: PinCodeTextField(
             appContext: context,
             // pastedTextStyle: TextStyle(
             //   color: Colors.green.shade600,
