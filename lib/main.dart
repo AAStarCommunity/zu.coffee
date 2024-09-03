@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
           ],
           translations: AppTranslations(),
           supportedLocales: AppTranslations.supportedLocales,
-          locale: Get.deviceLocale,//const Locale('zh', 'CN'),
+          locale: AppTranslations.locale,//Get.deviceLocale,//const Locale('zh', 'CN'),
           fallbackLocale: AppTranslations.fallbackLocale,
         ));
   }

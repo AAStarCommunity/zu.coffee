@@ -1,5 +1,7 @@
+import 'package:HexagonWarrior/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../translations/translations.dart';
 
@@ -23,6 +25,7 @@ class ChangeLanguagePage extends StatelessWidget {
                       itemBuilder: (_, index) {
                         var language = AppTranslations.supportLanguages[index];
                         return ListTile(onTap: () {
+                          Get.find<SharedPreferences>().language = language.item1;
                           Get.updateLocale(language.item2);
                         }, title: Text(language.item1.tr), selected: language.item2 == Get.locale);
                       },

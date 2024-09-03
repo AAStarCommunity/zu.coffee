@@ -25,4 +25,15 @@ extension SpExt on SharedPreferences{
 
   String? get token => getString("token");
 
+
+  set language(v) {
+    if(isNotNull(v)) {
+      setString("language", v);
+    } else {
+      remove("language");
+    }
+  }
+
+  String? get language => getString("language");
+
 }

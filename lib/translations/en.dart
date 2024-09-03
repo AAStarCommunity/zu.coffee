@@ -11,9 +11,9 @@ const en = {
   "mailHint": "电子邮件地址",
   "mailHintError": "请输入有效的电子邮件地址",
   "settings": "Settings",
-  "account": "账户",
-  "transaction": "账单",
-  "logout": "退出",
+  "account": "Account",
+  "transaction": "Transaction",
+  "logout": "logout",
   "appearance": "Appearance",
   "complete_pin_code" : "请输入有效的验证码",
   ..._easy_refresh

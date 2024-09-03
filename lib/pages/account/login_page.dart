@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailFormKey = GlobalKey<FormState>();
   final _pinCodeFormKey = GlobalKey<FormState>();
 
-  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "pda1415@boranora.com" : "");
+  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "hec9paj2@fdeservices.com" : "");
   StreamController<ErrorAnimationType> _errorCtrl = StreamController<ErrorAnimationType>();
   TextEditingController _pinCodeCtrl = TextEditingController(text: kDebugMode ? "111111" : "");
 
@@ -150,7 +150,8 @@ class _LoginPageState extends State<LoginPage> {
           CupertinoButton.filled(onPressed: () {
             FocusScope.of(context).requestFocus(FocusNode());
             _login();
-          }, child: Text("login".tr)).marginOnly(top: 50)
+          }, child: Text("login".tr)).marginOnly(top: 50),
+          TextButton(onPressed: (){}, child: Center(child: Text("还有没有账号，去注册")))
         ]).paddingSymmetric(horizontal: 24)
       ]),
     );

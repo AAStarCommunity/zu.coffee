@@ -170,13 +170,13 @@ class _Api implements Api {
   }
 
   @override
-  Future<GenericResponse<dynamic>> getAccountInfo() async {
+  Future<GenericResponse<AccountInfoResponse>> getAccountInfo() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GenericResponse<dynamic>>(Options(
+        _setStreamType<GenericResponse<AccountInfoResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -188,9 +188,9 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GenericResponse<dynamic>.fromJson(
+    final value = GenericResponse<AccountInfoResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+      (json) => AccountInfoResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

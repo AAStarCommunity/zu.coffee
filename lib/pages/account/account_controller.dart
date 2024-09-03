@@ -4,9 +4,12 @@ import 'package:HexagonWarrior/api/api.dart';
 import 'package:HexagonWarrior/api/generic_response.dart';
 import 'package:HexagonWarrior/api/requests/reg_request.dart';
 import 'package:HexagonWarrior/api/requests/sign_request.dart';
+import 'package:HexagonWarrior/api/requests/tx_sign_request.dart';
 import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
+import 'package:HexagonWarrior/api/response/account_info_response.dart';
 import 'package:HexagonWarrior/api/response/reg_response.dart';
 import 'package:HexagonWarrior/extensions/extensions.dart';
+import 'package:HexagonWarrior/pages/account/models/account_info.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -19,10 +22,16 @@ import '../../utils/webauthn/uint8list_converter.dart';
 const _ORIGIN_DOMAIN = "https://demoweb.aastar.io";
 const _network = "optimism-sepolia";
 
-class AccountController extends GetxController {
+class AccountController extends GetxController with StateMixin<AccountInfo>{
 
-  Future<void> getAccountInfo() async{
+  Future<AccountInfo?> getAccountInfo() async{
     final resp = await Api().getAccountInfo();
+    if(resp.success){
+      final account = AccountInfo.fromJson(resp.data!.toJson());
+      change(account, status: RxStatus.success());
+      update();
+    }
+    return null;
   }
 
   Future<GenericResponse> register(String email, {String? captcha, String? network = _network}) async{
@@ -82,6 +91,13 @@ class AccountController extends GetxController {
       }
 
     return res;
+  }
+
+  Future<void> txSign() async{
+    final publicKey = await Api().txSign(TxSignRequest());
+    CredentialRequestOptions.fromJson({
+      "publicKey" : {}
+    });
   }
 
   @override
