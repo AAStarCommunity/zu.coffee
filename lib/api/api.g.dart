@@ -69,9 +69,19 @@ class _Api implements Api {
   }
 
   @override
-  Future<VoidModel> regVerify(req) async {
+  Future<VoidModel> regVerify(
+    email,
+    origin,
+    network,
+    req,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'email': email.toJson(),
+      r'origin': origin,
+      r'network': network,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
@@ -117,11 +127,19 @@ class _Api implements Api {
   }
 
   @override
-  Future<VoidModel> signVerify(req) async {
+  Future<VoidModel> signVerify(
+    email,
+    origin,
+    req,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'email': email.toJson(),
+      r'origin': origin,
+    };
     final _headers = <String, dynamic>{};
-    final _data = req;
+    final _data = <String, dynamic>{};
+    _data.addAll(req.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
       method: 'POST',

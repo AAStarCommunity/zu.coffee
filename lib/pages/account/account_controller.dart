@@ -1,24 +1,23 @@
 import 'dart:async';
-
 import 'package:HexagonWarrior/api/api.dart';
 import 'package:HexagonWarrior/api/requests/reg_request.dart';
-import 'package:HexagonWarrior/api/requests/reg_verify_request.dart';
 import 'package:HexagonWarrior/api/requests/sign_request.dart';
-import 'package:HexagonWarrior/api/requests/sign_verify_request.dart';
+import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
 import 'package:HexagonWarrior/api/response.dart';
 import 'package:HexagonWarrior/extensions/extensions.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../api/requests/prepare_request.dart';
+
+const _ORIGIN_DOMAIN = "https://demoweb.aastar.io";
 
 class AccountController extends GetxController {
 
-  Future<HttpResult> register(String email) async{
+  Future<HttpResult> register(String email, VerifyRequestBody body, {String? captcha, String? network}) async{
 
-     var res = await Api().reg(RegRequest(captcha: "", email: "", origin: ""));
+     var res = await Api().reg(RegRequest(captcha: captcha!, email: email, origin: _ORIGIN_DOMAIN));
       if(res.success) {
-        res = await Api().regVerify(RegVerifyRequest(email: "", origin: ""));
+        res = await Api().regVerify(email, _ORIGIN_DOMAIN, network, body);
         if(res.success) {
 
         }
@@ -33,10 +32,10 @@ class AccountController extends GetxController {
   }
 
 
-  Future<HttpResult> login(String email, {String? captcha}) async{
-      var res = await Api().sign(SignRequest(captcha: captcha, email: email, origin: ""));
+  Future<HttpResult> login(String email, VerifyRequestBody body, {String? captcha}) async{
+      var res = await Api().sign(SignRequest(captcha: captcha, email: email, origin: _ORIGIN_DOMAIN));
       if(res.success) {
-        res = await Api().signVerify(SignVerifyRequest(email: email, origin: ""));
+        res = await Api().signVerify(email, _ORIGIN_DOMAIN, body);
       }
 
     return res;

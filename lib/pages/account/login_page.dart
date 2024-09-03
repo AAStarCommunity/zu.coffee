@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
 import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/pages/main_page.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
@@ -161,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
       final controller = Get.find<AccountController>();
       if(_pinCodeVisible) {
         if(_pinCodeFormKey.currentState!.validate() && _emailFormKey.currentState!.validate()) {
-          final res = await controller.login(_emailCtrl.text, captcha: _pinCodeCtrl.text);
+          final res = await controller.register(_emailCtrl.text, VerifyRequestBody(),captcha: _pinCodeCtrl.text);
           if(res.success) {
             Get.offAllNamed(MainPage.routeName);
           } else {
