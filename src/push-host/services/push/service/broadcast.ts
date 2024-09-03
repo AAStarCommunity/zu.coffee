@@ -11,7 +11,7 @@ export const Broadcast = async (body: BroadcastRequest): Promise<string> => {
     client,
     addresses: ["0x1234", "0x5678"],
     cachedCanMessageAddresses: ["0x1234"],
-  })
-  broadcastClient.broadcast(['Hello!'], {})
+  });
+  broadcastClient.broadcast(["Hello!"], {});
   return "Broadcasting message...";
 };
