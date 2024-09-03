@@ -2,11 +2,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'reg_response.g.dart';
 
-@JsonSerializable()
-class RegResponse {
+@JsonSerializable(genericArgumentFactories: true, explicitToJson: true)
+class RegResponse{
   String? attestation;
   AuthenticatorSelection? authenticatorSelection;
-  List<int>? challenge;
+  String? challenge;
   List<ExcludeCredentials>? excludeCredentials;
   Extensions? extensions;
   List<PubKeyCredParams>? pubKeyCredParams;
@@ -33,10 +33,10 @@ class RegResponse {
 
 @JsonSerializable()
 class AuthenticatorSelection {
-  String? authenticatorAttachment;
-  bool? requireResidentKey;
-  String? residentKey;
-  String? userVerification;
+  String? authenticatorAttachment; //['Platform','Cross-platform']
+  bool? requireResidentKey;// [true,false]
+  String? residentKey;//['Required','Preferred','Discouraged']
+  String? userVerification;//['Required','Preferred','Discouraged']
 
   AuthenticatorSelection(
       {this.authenticatorAttachment,

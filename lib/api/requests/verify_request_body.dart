@@ -2,13 +2,13 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'verify_request_body.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class VerifyRequestBody {
   String? authenticatorAttachment;
-  ClientExtensionResults? clientExtensionResults;
+  Map<String, dynamic>? clientExtensionResults;
   String? id;
-  List<int>? rawId;
-  Response? response;
+  String? rawId;
+  VerifyResponse? response;
   List<String>? transports;
   String? type;
 
@@ -27,26 +27,17 @@ class VerifyRequestBody {
 }
 
 @JsonSerializable()
-class ClientExtensionResults {
-  String? property1;
-  String? property2;
-
-  ClientExtensionResults({this.property1, this.property2});
-
-  factory ClientExtensionResults.fromJson(Map<String, dynamic> json) => _$ClientExtensionResultsFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ClientExtensionResultsToJson(this);
-}
-
-@JsonSerializable()
-class Response {
-  List<int>? attestationObject;
-  List<int>? clientDataJSON;
+class VerifyResponse {
+  String? attestationObject;
+  String? clientDataJSON;
   List<String>? transports;
+  int? publicKeyAlgorithm;
+  String? publicKey;
+  String? authenticatorData;
 
-  Response({this.attestationObject, this.clientDataJSON, this.transports});
+  VerifyResponse({this.attestationObject, this.clientDataJSON, this.transports, this.publicKey, this.publicKeyAlgorithm, this.authenticatorData});
 
-  factory Response.fromJson(Map<String, dynamic> json) => _$ResponseFromJson(json);
+  factory VerifyResponse.fromJson(Map<String, dynamic> json) => _$VerifyResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ResponseToJson(this);
+  Map<String, dynamic> toJson() => _$VerifyResponseToJson(this);
 }

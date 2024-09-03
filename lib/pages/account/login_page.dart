@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
 import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/pages/main_page.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -27,11 +27,11 @@ class _LoginPageState extends State<LoginPage> {
   final _emailFormKey = GlobalKey<FormState>();
   final _pinCodeFormKey = GlobalKey<FormState>();
 
-  TextEditingController _emailCtrl = TextEditingController();
+  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "pda1415@boranora.com" : "");
   StreamController<ErrorAnimationType> _errorCtrl = StreamController<ErrorAnimationType>();
-  TextEditingController _pinCodeCtrl = TextEditingController();
+  TextEditingController _pinCodeCtrl = TextEditingController(text: kDebugMode ? "111111" : "");
 
-  bool _pinCodeVisible = false;
+  bool _pinCodeVisible = kDebugMode;
 
   String? _validatePinCode(String? v) {
     if (v == null || v.length < 6) {
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     _emailCtrl.dispose();
-    _pinCodeCtrl.dispose();
+    // _pinCodeCtrl.dispose();
     _errorCtrl.close();
     super.dispose();
   }
@@ -162,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
       final controller = Get.find<AccountController>();
       if(_pinCodeVisible) {
         if(_pinCodeFormKey.currentState!.validate() && _emailFormKey.currentState!.validate()) {
-          final res = await controller.register(_emailCtrl.text, VerifyRequestBody(),captcha: _pinCodeCtrl.text);
+          final res = await controller.register(_emailCtrl.text, captcha: _pinCodeCtrl.text);
           if(res.success) {
             Get.offAllNamed(MainPage.routeName);
           } else {

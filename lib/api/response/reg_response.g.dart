@@ -12,9 +12,7 @@ RegResponse _$RegResponseFromJson(Map<String, dynamic> json) => RegResponse(
           ? null
           : AuthenticatorSelection.fromJson(
               json['authenticatorSelection'] as Map<String, dynamic>),
-      challenge: (json['challenge'] as List<dynamic>?)
-          ?.map((e) => (e as num).toInt())
-          .toList(),
+      challenge: json['challenge'] as String?,
       excludeCredentials: (json['excludeCredentials'] as List<dynamic>?)
           ?.map((e) => ExcludeCredentials.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -36,14 +34,16 @@ RegResponse _$RegResponseFromJson(Map<String, dynamic> json) => RegResponse(
 Map<String, dynamic> _$RegResponseToJson(RegResponse instance) =>
     <String, dynamic>{
       'attestation': instance.attestation,
-      'authenticatorSelection': instance.authenticatorSelection,
+      'authenticatorSelection': instance.authenticatorSelection?.toJson(),
       'challenge': instance.challenge,
-      'excludeCredentials': instance.excludeCredentials,
-      'extensions': instance.extensions,
-      'pubKeyCredParams': instance.pubKeyCredParams,
-      'rp': instance.rp,
+      'excludeCredentials':
+          instance.excludeCredentials?.map((e) => e.toJson()).toList(),
+      'extensions': instance.extensions?.toJson(),
+      'pubKeyCredParams':
+          instance.pubKeyCredParams?.map((e) => e.toJson()).toList(),
+      'rp': instance.rp?.toJson(),
       'timeout': instance.timeout,
-      'user': instance.user,
+      'user': instance.user?.toJson(),
     };
 
 AuthenticatorSelection _$AuthenticatorSelectionFromJson(

@@ -56,6 +56,12 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Get.find<AccountController>().getAccountInfo();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final drawer = NavigationDrawer(indicatorColor: Colors.transparent, children: [

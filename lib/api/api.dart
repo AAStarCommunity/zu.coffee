@@ -1,9 +1,9 @@
-
+import 'package:HexagonWarrior/api/generic_response.dart';
 import 'package:HexagonWarrior/api/requests/bind_account_request.dart';
 import 'package:HexagonWarrior/api/requests/sign_account_request.dart';
 import 'package:HexagonWarrior/api/requests/tx_sign_request.dart';
 import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
-import 'package:HexagonWarrior/api/response.dart';
+import 'package:HexagonWarrior/api/response/reg_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
@@ -12,6 +12,8 @@ import 'requests/prepare_request.dart';
 import 'requests/reg_request.dart';
 import 'requests/sign_request.dart';
 import 'requests/tx_sign_verify_request.dart';
+import 'response/account_info_response.dart';
+import 'response/reg_verify_response.dart';
 
 part 'api.g.dart';
 
@@ -23,35 +25,35 @@ abstract class Api{
   }
 
   @POST("/api/passkey/v1/reg/prepare")
-  Future<VoidModel> prepare(@Body() PrepareRequest req);
+  Future<GenericResponse<dynamic>> prepare(@Body() PrepareRequest req);
 
   @POST('/api/passkey/v1/reg')
-  Future<VoidModel> reg(@Body() RegRequest req);
+  Future<GenericResponse<RegResponse>> reg(@Body() RegRequest req);
 
   @POST("/api/passkey/v1/reg/verify")
-  Future<VoidModel> regVerify(@Query("email") email, @Query("origin") String origin, @Query("network") String? network, @Body() VerifyRequestBody req);
+  Future<RegVerifyResponse> regVerify(@Query("email") String email, @Query("origin") String origin, @Query("network") String? network, @Body() VerifyRequestBody req);
 
   @POST("/api/passkey/v1/sign")
-  Future<VoidModel> sign(@Body() SignRequest req);
+  Future<GenericResponse<dynamic>> sign(@Body() SignRequest req);
 
   @POST("/api/passkey/v1/sign/verify")
-  Future<VoidModel> signVerify(@Query("email") email, @Query("origin") String origin, @Body() VerifyRequestBody req);
+  Future<GenericResponse<dynamic>> signVerify(@Query("email") String email, @Query("origin") String origin, @Body() VerifyRequestBody req);
 
   @GET("/api/passkey/v1/account/info")
-  Future<VoidModel> getAccountInfo();
+  Future<GenericResponse<AccountInfoResponse>> getAccountInfo();
 
   @POST("/api/passkey/v1/tx/sign")
-  Future<VoidModel> txSign(@Body() TxSignRequest req);
+  Future<GenericResponse<dynamic>> txSign(@Body() TxSignRequest req);
 
   @POST("/api/passkey/v1/tx/sign/verify")
-  Future<VoidModel> txSignVerify(@Body() TxSignVerifyRequest req);
+  Future<GenericResponse<dynamic>> txSignVerify(@Body() TxSignVerifyRequest req);
 
   @POST("/api/account/v1/transfer")
-  Future<VoidModel> transfer(@Query("apiKey") String apiKey);
+  Future<GenericResponse<dynamic>> transfer(@Query("apiKey") String apiKey);
 
   @POST("/api/account/v1/bind")
-  Future<VoidModel> bind(@Body() BindAccountRequest req);
+  Future<GenericResponse<dynamic>> bind(@Body() BindAccountRequest req);
 
   @POST("/api/account/v1/sign")
-  Future<VoidModel> signAccount(@Body() SignAccountRequest req);
+  Future<GenericResponse<dynamic>> signAccount(@Body() SignAccountRequest req);
 }

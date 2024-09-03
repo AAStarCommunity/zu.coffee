@@ -21,14 +21,14 @@ class _Api implements Api {
   String? baseUrl;
 
   @override
-  Future<VoidModel> prepare(req) async {
+  Future<GenericResponse<dynamic>> prepare(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -40,19 +40,22 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> reg(req) async {
+  Future<GenericResponse<RegResponse>> reg(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<RegResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -64,12 +67,15 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<RegResponse>.fromJson(
+      _result.data!,
+      (json) => RegResponse.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> regVerify(
+  Future<RegVerifyResponse> regVerify(
     email,
     origin,
     network,
@@ -77,7 +83,7 @@ class _Api implements Api {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'email': email.toJson(),
+      r'email': email,
       r'origin': origin,
       r'network': network,
     };
@@ -86,7 +92,7 @@ class _Api implements Api {
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<RegVerifyResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -98,19 +104,19 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = RegVerifyResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<VoidModel> sign(req) async {
+  Future<GenericResponse<dynamic>> sign(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -122,26 +128,29 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> signVerify(
+  Future<GenericResponse<dynamic>> signVerify(
     email,
     origin,
     req,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'email': email.toJson(),
+      r'email': email,
       r'origin': origin,
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -153,18 +162,21 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> getAccountInfo() async {
+  Future<GenericResponse<dynamic>> getAccountInfo() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -176,19 +188,22 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> txSign(req) async {
+  Future<GenericResponse<dynamic>> txSign(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -200,19 +215,22 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> txSignVerify(req) async {
+  Future<GenericResponse<dynamic>> txSignVerify(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -224,18 +242,21 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> transfer(apiKey) async {
+  Future<GenericResponse<dynamic>> transfer(apiKey) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'apiKey': apiKey};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -247,19 +268,22 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> bind(req) async {
+  Future<GenericResponse<dynamic>> bind(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -271,19 +295,22 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<VoidModel> signAccount(req) async {
+  Future<GenericResponse<dynamic>> signAccount(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -295,7 +322,10 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = VoidModel.fromJson(_result.data!);
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
