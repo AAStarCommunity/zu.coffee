@@ -15,6 +15,7 @@ const zhCN = {
   "transaction": "账单",
   "logout": "注销",
   "appearance": "外观",
+  "complete_pin_code" : "请输入有效的验证码",
   ..._easy_refresh
 };
 

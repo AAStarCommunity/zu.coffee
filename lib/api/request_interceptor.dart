@@ -1,9 +1,13 @@
+import 'package:HexagonWarrior/extensions/extensions.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as GET;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RequestInterceptor extends Interceptor{
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    options.headers['Authorization'] = GET.Get.find<SharedPreferences>().token;
     super.onRequest(options, handler);
   }
 

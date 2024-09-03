@@ -2,12 +2,10 @@ import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/pages/account/login_page.dart';
 import 'package:HexagonWarrior/pages/qrcode/qrcode_page.dart';
 import 'package:HexagonWarrior/pages/settings/settings_page.dart';
-import 'package:HexagonWarrior/utils/ui/loading_dialog.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../theme/theme_model.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/';
@@ -72,6 +70,22 @@ class _MainPageState extends State<MainPage> {
           IconButton(onPressed: (){
             Get.toNamed(QRCodePage.routeName);
           }, icon: Icon(CupertinoIcons.camera_viewfinder))
+        ]),
+        body: Column(children: [
+         ElevatedButton(onPressed: () async{
+
+           // final authenticator = Authenticator(true, true);
+           // final attestation = await authenticator.makeCredential(MakeCredentialOptions(
+           //     clientDataHash: clientDataHash,
+           //     rpEntity: rpEntity,
+           //     userEntity: userEntity,
+           //     requireResidentKey: requireResidentKey,
+           //     requireUserPresence: requireUserPresence,
+           //     requireUserVerification: requireUserVerification,
+           //     credTypesAndPubKeyAlgs: credTypesAndPubKeyAlgs));
+           // attestation.asCBOR();
+
+         }, child: Text("test"))
         ]),
         bottomNavigationBar: BottomNavigationBar(currentIndex: _pageIndex, items: [
           BottomNavigationBarItem(

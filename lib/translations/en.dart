@@ -15,6 +15,7 @@ const en = {
   "transaction": "账单",
   "logout": "退出",
   "appearance": "Appearance",
+  "complete_pin_code" : "请输入有效的验证码",
   ..._easy_refresh
 };
 
