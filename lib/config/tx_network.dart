@@ -20,8 +20,9 @@ class TxContracts {
   final String usdt;
   final String nft;
   final String communityManager;
+  final String eventManager;
 
-  TxContracts({required this.usdt, required this.nft, required this.communityManager});
+  TxContracts({required this.usdt, required this.nft, required this.communityManager, required this.eventManager});
 }
 
 class BundlerConfig extends IConfig{
@@ -59,6 +60,12 @@ class IConfigOption {
     this.strategyCode,
     this.version
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "type": type,
+    };
+  }
 }
 
 class SponsorshipInfo {

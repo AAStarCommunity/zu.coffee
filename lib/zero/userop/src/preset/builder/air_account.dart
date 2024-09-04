@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:HexagonWarrior/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/crypto.dart';
 
@@ -70,27 +71,25 @@ class AirAccount extends UserOperationBuilder {
     ]);
     ctx.op.nonce = results[0];
     // final code = results[1];
-    // ctx.op.initCode = code == "0x" ? initCode : "0x";
+    ctx.op.initCode = initCode;
   }
 
   /// Initializes a AirAccount object and returns it.
-  static Future<AirAccount> init(String initCode, String rpcUrl, String origin, EthereumAddress smartContractAddress, {IPresetBuilderOpts? opts}) async {
+  static Future<AirAccount> init(String aa, String initCode, String rpcUrl, String origin, EthereumAddress smartContractAddress, {IPresetBuilderOpts? opts}) async {
     final instance = AirAccount(rpcUrl, opts: opts);
 
     instance.initCode = initCode;
 
-    final senderAddress =
+    final senderAddress = EthereumAddress.fromHex(aa);
     instance.proxy = simple_account_impl.SimpleAccount(
       address: smartContractAddress,
       client: instance.simpleAccountFactory.client,
     );
-
-    final baseInstance = instance
-        .useDefaults({
-      'sender': instance.proxy.self.address.toString(),
-    })
-        .useMiddleware(instance.resolveAccount)
-        .useMiddleware(getGasPrice(
+    logger.i("${instance.proxy.self.address.toString()}");
+    // final sender = entrypoint.callStatic.getsenddaddr(initCode)
+    final baseInstance = instance.useDefaults({
+      'sender': aa,//instance.proxy.self.address.toString(),
+    }).useMiddleware(instance.resolveAccount).useMiddleware(getGasPrice(
       instance.simpleAccountFactory.client,
     ));
 
@@ -103,7 +102,7 @@ class AirAccount extends UserOperationBuilder {
       ),
     );
 
-    return withPM.useMiddleware(signUserOpHashUseSignature(origin))
+    return baseInstance.useMiddleware(signUserOpHashUseSignature(origin))
     as AirAccount;
   }
 

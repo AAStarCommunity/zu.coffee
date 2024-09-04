@@ -12,23 +12,24 @@ import '../../userop/userop.dart';
 import 'package:flutter/services.dart' show rootBundle;
 // import 'package:web3dart/crypto.dart';assets/contracts/TetherToken.json
 
-Future<void> mint(String receiverAddress, String functionName, String tokenAbiPath, String initCode, String origin, {String? amountStr}) async {
+Future<void> mint(String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {String? amountStr}) async {
   final contractName = tokenAbiPath.substring(tokenAbiPath.lastIndexOf("/") + 1, tokenAbiPath.lastIndexOf("."));
   final tokenAddress = EthereumAddress.fromHex(op_sepolia.contracts.usdt);
-  final targetAddress = EthereumAddress.fromHex(receiverAddress);
+  final targetAddress = EthereumAddress.fromHex(aaAddress);
   final amount = isNotNull(amountStr) ? BigInt.parse(amountStr!) : BigInt.zero;
 
   final bundlerRPC = op_sepolia.bundler.first.url;
 
   final paymasterMiddleware = verifyingPaymaster(
      op_sepolia.paymaster.first.url,
-    {},
+     op_sepolia.paymaster.first.option!.toJson(),
   );
 
   final IPresetBuilderOpts opts = IPresetBuilderOpts()
   ..paymasterMiddleware = paymasterMiddleware;
 
   final airAccount = await AirAccount.init(
+    aaAddress,
     initCode,
     bundlerRPC,
     origin,
@@ -62,7 +63,7 @@ Future<void> mint(String receiverAddress, String functionName, String tokenAbiPa
         amount,
       ],
       include0x: true,
-      jsonInterface: abiObj['abi']
+      jsonInterface: jsonEncode(abiObj['abi'])
     ),
   );
   final userOp = await airAccount.execute(call);

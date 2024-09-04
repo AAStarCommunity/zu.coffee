@@ -10,7 +10,7 @@ final eth_sepolia = TxNetwork(
     contracts: TxContracts(
         usdt: "0x7169D38820dfd117C3FA1f22a697dBA58d90BA06",
         nft: "0xCEf599508abd274bab8F0D9D9149d9ceeD9a2A07",
-        communityManager: address_zero),
+        communityManager: address_zero, eventManager: address_zero),
     bundler: [
       BundlerConfig(
           provider: "stackup",
@@ -46,23 +46,24 @@ final eth_sepolia = TxNetwork(
     ]);
 
 
-final op_sepolia = TxNetwork(name: "OP Sepolia Testnet",
-    chainId: "11155420", blockExplorerURL: "https://public.stackup.sh/api/v1/node/optimism-sepolia",
+final op_sepolia = TxNetwork(name: "OP Sepolia",
+    chainId: "11155420", blockExplorerURL: "https://sepolia-optimism.etherscan.io",
     contracts: TxContracts(
         usdt: "0x1927E2D716D7259d06006bFaF3dBFA22A12d6945",
         nft: "0x9194618d3695902a426bfacc9e2182d2cb6ad880",
-        communityManager: "0x0030573eE4cd93e3672544eB498FdfCaFA1CfcF2"),
+        communityManager: "0x83924f7a84257c808a5af8a2650fec77f96ec1f0",
+        eventManager: "0xd395e7293d2afeeeeae705d075b952c12315e510"),
     bundler: <BundlerConfig>[
       BundlerConfig(
           provider: "stackup",
-          url: "https://public.stackup.sh/api/v1/node/optimism-sepolia"
+          url: "https://api.stackup.sh/v1/node/7d139a21553146569a5bfb71478befa462bda69335e469cf25463ea6bc8b2366"
       )
     ], paymaster: <PaymasterConfig>[
       PaymasterConfig(
           provider: "stackup",
-          url: "https://api.stackup.sh/v1/paymaster/5309e1878a24d01f3998beb56b2357443f72d127ee224eab072bd2378168da01",
+          url: "https://api.stackup.sh/v1/paymaster/7d139a21553146569a5bfb71478befa462bda69335e469cf25463ea6bc8b2366",
           option: IConfigOption(type: "payg"))
-    ], rpc: "https://public.stackup.sh/api/v1/node/optimism-sepolia");
+    ], rpc: "https://endpoints.omniatech.io/v1/op/sepolia/public");
 
 
 final arb_sepolia = TxNetwork(name: "Arbitrum Sepolia",
@@ -71,6 +72,7 @@ final arb_sepolia = TxNetwork(name: "Arbitrum Sepolia",
       usdt: "0x1927E2D716D7259d06006bFaF3dBFA22A12d6945",
       nft: address_zero,
       communityManager: address_zero,
+      eventManager: address_zero
     ), bundler: <BundlerConfig>[
       BundlerConfig(provider: "stackup", url: "https://public.stackup.sh/api/v1/node/arbitrum-sepolia")
     ], paymaster: <PaymasterConfig>[
