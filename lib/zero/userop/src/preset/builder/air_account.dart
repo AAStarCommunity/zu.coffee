@@ -102,7 +102,7 @@ class AirAccount extends UserOperationBuilder {
       ),
     );
 
-    return baseInstance.useMiddleware(signUserOpHashUseSignature(origin))
+    return withPM.useMiddleware(signUserOpHashUseSignature(origin))
     as AirAccount;
   }
 
