@@ -16,6 +16,7 @@ const en = {
   "logout": "logout",
   "appearance": "Appearance",
   "complete_pin_code" : "请输入有效的验证码",
+  "codeSent": "Pin code sent",
   ..._easy_refresh
 };
 

@@ -16,6 +16,7 @@ const zhCN = {
   "logout": "注销",
   "appearance": "外观",
   "complete_pin_code" : "请输入有效的验证码",
+  "codeSent": "验证码已发送",
   ..._easy_refresh
 };
 

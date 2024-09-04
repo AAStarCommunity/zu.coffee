@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:HexagonWarrior/config/tx_configs.dart';
+import 'package:HexagonWarrior/main.dart';
 import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/utils/validate_util.dart';
 import 'package:HexagonWarrior/zero/userop/src/preset/builder/air_account.dart';
@@ -19,6 +20,7 @@ Future<void> mint(String aaAddress, String functionName, String tokenAbiPath, St
   final amount = isNotNull(amountStr) ? BigInt.parse(amountStr!) : BigInt.zero;
 
   final bundlerRPC = op_sepolia.bundler.first.url;
+  final rpcUrl = op_sepolia.rpc;
 
   final paymasterMiddleware = verifyingPaymaster(
      op_sepolia.paymaster.first.url,
@@ -27,25 +29,23 @@ Future<void> mint(String aaAddress, String functionName, String tokenAbiPath, St
 
   final IPresetBuilderOpts opts = IPresetBuilderOpts()
   ..paymasterMiddleware = paymasterMiddleware;
+  //..overrideBundlerRpc = bundlerRPC;
 
   final airAccount = await AirAccount.init(
     aaAddress,
     initCode,
-    bundlerRPC,
+    rpcUrl,
     origin,
     tokenAddress,
     opts: opts,
   );
 
-  final IClientOpts iClientOpts = IClientOpts()
-    ..overrideBundlerRpc = bundlerRPC;
-
-  final client = await Client.init(bundlerRPC, opts: iClientOpts);
+  final client = await Client.init(bundlerRPC);
 
   final sendOpts = ISendUserOperationOpts()
-    ..dryRun = true
+    ..dryRun = false
     ..onBuild = (IUserOperation ctx) async {
-      debugPrint("Signed UserOperation：" + ctx.opToJson().toString());
+      logger.i("Signed UserOperation：" + ctx.toJson().toString());
     };
 
   String abiStr = await rootBundle.loadString(tokenAbiPath);

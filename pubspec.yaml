@@ -32,6 +32,7 @@ dependencies:
   uuid: ^4.0.0
   logger: ^2.0.1
   url_launcher: ^6.1.8
+  web_socket_channel: ^3.0.1
 
 #  flutter_ethers: ^1.1.1
 #  userop: ^0.3.0

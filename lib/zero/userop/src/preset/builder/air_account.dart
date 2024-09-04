@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:HexagonWarrior/main.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/crypto.dart';
+import 'package:web_socket_channel/io.dart';
 
 import '../../../userop.dart';
 import '../../typechain/SimpleAccount.g.dart' as simple_account_impl;
@@ -31,7 +33,7 @@ class AirAccount extends UserOperationBuilder {
   /// The proxy instance to interact with the SimpleAccount contract.
   late simple_account_impl.SimpleAccount proxy;
 
-  AirAccount(String rpcUrl, {IPresetBuilderOpts? opts}) : super() {
+  AirAccount(String rpcUrl, {IPresetBuilderOpts? opts, EthereumAddress? sender}) : super() {
     final web3client = Web3Client.custom(BundlerJsonRpcProvider(
       rpcUrl,
       http.Client(),
@@ -50,37 +52,25 @@ class AirAccount extends UserOperationBuilder {
     initCode = '0x';
     nonceKey = opts?.nonceKey ?? BigInt.zero;
     proxy = simple_account_impl.SimpleAccount(
-      address: EthereumAddress.fromHex(Addresses.AddressZero),
+      address: sender ?? EthereumAddress.fromHex(Addresses.AddressZero),
       client: web3client,
     );
   }
 
   /// Resolves the nonce and init code for the SimpleAccount contract creation.
   Future<void> resolveAccount(ctx) async {
-    final results = await Future.wait([
-      entryPoint.getNonce(
-        (
-        key: nonceKey,
-        sender: EthereumAddress.fromHex(ctx.op.sender),
-        ),
-      ),
-      // entryPoint.client.makeRPCCall<String>('eth_getCode', [
-      //   ctx.op.sender,
-      //   'latest',
-      // ])
-    ]);
-    ctx.op.nonce = results[0];
+    ctx.op.nonce = await entryPoint.getNonce((key: nonceKey, sender: EthereumAddress.fromHex(ctx.op.sender)));
     // final code = results[1];
+    // ctx.op.nonce = BigInt.zero;
     ctx.op.initCode = initCode;
   }
 
   /// Initializes a AirAccount object and returns it.
   static Future<AirAccount> init(String aa, String initCode, String rpcUrl, String origin, EthereumAddress smartContractAddress, {IPresetBuilderOpts? opts}) async {
-    final instance = AirAccount(rpcUrl, opts: opts);
+    final senderAddress = EthereumAddress.fromHex(aa);
+    final instance = AirAccount(rpcUrl, opts: opts, sender: senderAddress);
 
     instance.initCode = initCode;
-
-    final senderAddress = EthereumAddress.fromHex(aa);
     instance.proxy = simple_account_impl.SimpleAccount(
       address: smartContractAddress,
       client: instance.simpleAccountFactory.client,

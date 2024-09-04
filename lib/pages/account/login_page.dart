@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:webauthn/webauthn.dart';
 
 import '../../utils/validate_util.dart';
 
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailFormKey = GlobalKey<FormState>();
   final _pinCodeFormKey = GlobalKey<FormState>();
 
-  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "gcapdevielle@24hinbox.com" : "");
+  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "stands6@clonetrust.com" : "");
   StreamController<ErrorAnimationType> _errorCtrl = StreamController<ErrorAnimationType>();
   TextEditingController _pinCodeCtrl = TextEditingController(text: kDebugMode ? "111111" : "");
 
@@ -175,6 +176,7 @@ class _LoginPageState extends State<LoginPage> {
 
           final res = await controller.prepare(_emailCtrl.text);
           if(res.success) {
+            toast("codeSent".tr);
             if(mounted) {
               setState(() {
                 _pinCodeVisible = true;
@@ -194,7 +196,11 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     } catch(e) {
-      _snackMessage(e.toString());
+      if(e is GetAssertionException) {
+
+      } else {
+        _snackMessage(e.toString());
+      }
     } finally {
       closeLoading();
     }
