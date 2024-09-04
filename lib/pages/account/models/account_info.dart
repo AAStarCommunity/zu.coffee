@@ -4,10 +4,12 @@ part 'account_info.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AccountInfo {
+  @JsonKey(name: "init_code")
   String? initCode;
   String? eoa;
   String? aa;
   String? email;
+  @JsonKey(name: "private_key")
   String? privateKey;
 
   AccountInfo({this.initCode, this.eoa, this.aa, this.email, this.privateKey});

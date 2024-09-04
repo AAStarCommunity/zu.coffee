@@ -4,10 +4,13 @@ part 'account_info_response.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AccountInfoResponse {
+
+  @JsonKey(name: "init_code")
   String? initCode;
   String? eoa;
   String? aa;
   String? email;
+  @JsonKey(name: "private_key")
   String? privateKey;
 
   AccountInfoResponse({this.initCode, this.eoa, this.aa, this.email, this.privateKey});

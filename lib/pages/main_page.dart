@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../zero/example/airAccount/erc20_transfer.dart';
+
 class MainPage extends StatefulWidget {
   static const routeName = '/';
 
@@ -92,7 +94,7 @@ class _MainPageState extends State<MainPage> {
             (state) {
               return Column(children: [
                 Row(children: [
-                  Text("${state?.aa}"),
+                  Text("${state?.aa}\n${state?.initCode}"),
                   IconButton(onPressed: (){
                     Clipboard.setData(ClipboardData(text: "${state?.aa}")).then((_) => showSnackMessage(context, "Successfully"));
                   }, icon: Icon(Icons.content_copy))
@@ -106,7 +108,9 @@ class _MainPageState extends State<MainPage> {
                   ]),
                   const SizedBox(height: 20),
                   Wrap(spacing: 12, children: [
-                    FilledButton(onPressed: (){}, child: Text("Mint"), style: buttonStyle),
+                    FilledButton(onPressed: (){
+                      mint(state!.aa!, "_mint", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amountStr: "5");
+                    }, child: Text("Mint"), style: buttonStyle),
                     FilledButton(onPressed: (){}, child: Text("Send"), style: buttonStyle),
                     FilledButton(onPressed: (){}, child: Text("Mint USDT And Mint NFT"), style: buttonStyle)
                   ]),

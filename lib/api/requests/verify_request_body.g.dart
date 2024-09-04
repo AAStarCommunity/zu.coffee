@@ -6,8 +6,8 @@ part of 'verify_request_body.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-VerifyRequestBody _$VerifyRequestBodyFromJson(Map<String, dynamic> json) =>
-    VerifyRequestBody(
+AttestationVerifyRequestBody _$VerifyRequestBodyFromJson(Map<String, dynamic> json) =>
+    AttestationVerifyRequestBody(
       authenticatorAttachment: json['authenticatorAttachment'] as String?,
       clientExtensionResults:
           json['clientExtensionResults'] as Map<String, dynamic>?,
@@ -15,14 +15,14 @@ VerifyRequestBody _$VerifyRequestBodyFromJson(Map<String, dynamic> json) =>
       rawId: json['rawId'] as String?,
       response: json['response'] == null
           ? null
-          : VerifyResponse.fromJson(json['response'] as Map<String, dynamic>),
+          : AttestationVerifyResponse.fromJson(json['response'] as Map<String, dynamic>),
       transports: (json['transports'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$VerifyRequestBodyToJson(VerifyRequestBody instance) =>
+Map<String, dynamic> _$VerifyRequestBodyToJson(AttestationVerifyRequestBody instance) =>
     <String, dynamic>{
       'authenticatorAttachment': instance.authenticatorAttachment,
       'clientExtensionResults': instance.clientExtensionResults,
@@ -33,8 +33,8 @@ Map<String, dynamic> _$VerifyRequestBodyToJson(VerifyRequestBody instance) =>
       'type': instance.type,
     };
 
-VerifyResponse _$VerifyResponseFromJson(Map<String, dynamic> json) =>
-    VerifyResponse(
+AttestationVerifyResponse _$VerifyResponseFromJson(Map<String, dynamic> json) =>
+    AttestationVerifyResponse(
       attestationObject: json['attestationObject'] as String?,
       clientDataJSON: json['clientDataJSON'] as String?,
       transports: (json['transports'] as List<dynamic>?)
@@ -45,7 +45,7 @@ VerifyResponse _$VerifyResponseFromJson(Map<String, dynamic> json) =>
       authenticatorData: json['authenticatorData'] as String?,
     );
 
-Map<String, dynamic> _$VerifyResponseToJson(VerifyResponse instance) =>
+Map<String, dynamic> _$VerifyResponseToJson(AttestationVerifyResponse instance) =>
     <String, dynamic>{
       'attestationObject': instance.attestationObject,
       'clientDataJSON': instance.clientDataJSON,

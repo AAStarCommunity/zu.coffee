@@ -109,14 +109,14 @@ class _Api implements Api {
   }
 
   @override
-  Future<GenericResponse<dynamic>> sign(req) async {
+  Future<GenericResponse<SignResponse>> sign(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GenericResponse<dynamic>>(Options(
+        _setStreamType<GenericResponse<SignResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -128,15 +128,15 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GenericResponse<dynamic>.fromJson(
+    final value = GenericResponse<SignResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+      (json) => SignResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<GenericResponse<dynamic>> signVerify(
+  Future<RegVerifyResponse> signVerify(
     email,
     origin,
     req,
@@ -150,7 +150,7 @@ class _Api implements Api {
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GenericResponse<dynamic>>(Options(
+        _setStreamType<GenericResponse<RegVerifyResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -162,10 +162,7 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GenericResponse<dynamic>.fromJson(
-      _result.data!,
-      (json) => json as dynamic,
-    );
+    final value = RegVerifyResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -196,14 +193,14 @@ class _Api implements Api {
   }
 
   @override
-  Future<GenericResponse<dynamic>> txSign(req) async {
+  Future<GenericResponse<SignResponse>> txSign(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GenericResponse<dynamic>>(Options(
+        _setStreamType<GenericResponse<SignResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -215,22 +212,26 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GenericResponse<dynamic>.fromJson(
+    final value = GenericResponse<SignResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+          (json) => SignResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<GenericResponse<dynamic>> txSignVerify(req) async {
+  Future<GenericResponse<SignVerifyResponse>> txSignVerify(nonce, origin, req) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'nonce': nonce,
+      r'origin': origin,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GenericResponse<dynamic>>(Options(
+        _setStreamType<GenericResponse<SignVerifyResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -242,9 +243,9 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GenericResponse<dynamic>.fromJson(
+    final value = GenericResponse<SignVerifyResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+          (json) => SignVerifyResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
