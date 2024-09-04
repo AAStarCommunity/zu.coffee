@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailFormKey = GlobalKey<FormState>();
   final _pinCodeFormKey = GlobalKey<FormState>();
 
-  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "stands6@clonetrust.com" : "");
+  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "pinoyscavenger@h0tmal.com" : "");
   StreamController<ErrorAnimationType> _errorCtrl = StreamController<ErrorAnimationType>();
   TextEditingController _pinCodeCtrl = TextEditingController(text: kDebugMode ? "111111" : "");
 

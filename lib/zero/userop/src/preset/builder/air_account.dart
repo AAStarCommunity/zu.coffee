@@ -56,13 +56,20 @@ class AirAccount extends UserOperationBuilder {
       client: web3client,
     );
   }
-
+  //final b = "0x60806040523615605f5773ffffffffffffffffffffffffffffffffffffffff7f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc54166000808092368280378136915af43d82803e15605b573d90f35b3d90fd5b73ffffffffffffffffffffffffffffffffffffffff7f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc54166000808092368280378136915af43d82803e15605b573d90f3fea26469706673582212205da2750cd2b0cadfd354d8a1ca4752ed7f22214c8069d852f7dc6b8e9e5ee66964736f6c63430008150033";
+  //final a = "0x60806040523615605f5773ffffffffffffffffffffffffffffffffffffffff7f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc54166000808092368280378136915af43d82803e15605b573d90f35b3d90fd5b73ffffffffffffffffffffffffffffffffffffffff7f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc54166000808092368280378136915af43d82803e15605b573d90f3fea26469706673582212205da2750cd2b0cadfd354d8a1ca4752ed7f22214c8069d852f7dc6b8e9e5ee66964736f6c63430008150033";
   /// Resolves the nonce and init code for the SimpleAccount contract creation.
   Future<void> resolveAccount(ctx) async {
-    ctx.op.nonce = await entryPoint.getNonce((key: nonceKey, sender: EthereumAddress.fromHex(ctx.op.sender)));
+
+    final nonce = await entryPoint.getNonce((key: nonceKey, sender: EthereumAddress.fromHex(ctx.op.sender)));
+    ctx.op.nonce = nonce;
+    ctx.op.initCode = nonce == BigInt.zero ? initCode : "0x";
+
+    logger.i("nonce: ${nonce}, initCode: ${ctx.op.initCode}, account initCode: ${initCode}, ${nonce == BigInt.zero}");
+    // ctx.op.nonce = await entryPoint.getNonce((key: nonceKey, sender: EthereumAddress.fromHex(ctx.op.sender)));
     // final code = results[1];
     // ctx.op.nonce = BigInt.zero;
-    ctx.op.initCode = initCode;
+    // ctx.op.initCode = initCode;
   }
 
   /// Initializes a AirAccount object and returns it.

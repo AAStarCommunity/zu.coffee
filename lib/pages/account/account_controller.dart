@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:HexagonWarrior/api/air_account_api_ext.dart';
 import 'package:HexagonWarrior/api/api.dart';
 import 'package:HexagonWarrior/api/generic_response.dart';
@@ -7,7 +6,9 @@ import 'package:HexagonWarrior/api/requests/reg_request.dart';
 import 'package:HexagonWarrior/api/requests/sign_request.dart';
 import 'package:HexagonWarrior/api/response/reg_response.dart';
 import 'package:HexagonWarrior/extensions/extensions.dart';
+import 'package:HexagonWarrior/main.dart';
 import 'package:HexagonWarrior/pages/account/models/account_info.dart';
+import 'package:HexagonWarrior/zero/example/airAccount/erc20_transfer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -21,14 +22,35 @@ const _network = "optimism-sepolia";
 const ORIGIN_DOMAIN = _ORIGIN_DOMAIN;
 
 class AccountController extends GetxController with StateMixin<AccountInfo> {
+
+  final _tokenAbiPath = "assets/contracts/TetherToken.json";
+
   Future<AccountInfo?> getAccountInfo() async {
     final resp = await Api().getAccountInfo();
     if (resp.success) {
       final account = AccountInfo.fromJson(resp.data!.toJson());
+      await runZonedGuarded(() async{
+        final res = await getBalance(_tokenAbiPath, account.aa!);
+        account.balance = res;
+      }, (e, s) {
+        logger.e(e.toString(), stackTrace: s);
+      });
       change(account, status: RxStatus.success());
       update();
     }
     return null;
+  }
+
+  mintUsdt() async{
+   final balance = await mint(state!.aa!, "_mint", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amount: 5);
+   change(state?..balance = balance, status: RxStatus.success());
+  }
+
+  sendUsdt() async{
+    //0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db
+    //"0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F"
+    final balance = await mint(state!.aa!, "transfer", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amount: 1, receiver: "0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db");
+    change(state?..balance = balance, status: RxStatus.success());
   }
 
   Future<GenericResponse> register(String email,
