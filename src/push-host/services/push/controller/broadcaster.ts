@@ -3,10 +3,23 @@ import { Broadcast } from "../service/broadcast";
 import { BroadcastRequest } from "../model/broadcast";
 import { createResponse } from "../model/response";
 import { asyncHandler } from "../../middleware/errorHandler";
-import { GetChannels } from "../service/get-channels";
-import { GetSubscribers, IsSubscribeExists } from "../service/get-subscribers";
+import {
+  GetChannels,
+  IsSubscribeExists,
+  Subscribe,
+} from "../service/get-subscribers";
+import { Subscriber } from "../model/subscribe";
 
 const router = Router();
+
+router.post(
+  "/subscribe",
+  asyncHandler(async (req: Request<{}, {}, Subscriber>, res: Response) => {
+    await Subscribe(req.body.address, req.body.channels);
+    const response = createResponse(200, false, "Subscribed successfully");
+    res.json(response);
+  }),
+);
 
 router.get(
   "/channels",
@@ -23,7 +36,11 @@ router.post(
     async (req: Request<{}, {}, BroadcastRequest>, res: Response) => {
       for (const channel of req.body.channels) {
         if (!IsSubscribeExists(channel)) {
-          const response = createResponse(400, true, "Channel(" + channel + ") not found");
+          const response = createResponse(
+            400,
+            true,
+            "Channel(" + channel + ") not found",
+          );
           res.json(response);
           return;
         }

@@ -1,6 +1,6 @@
 const channelSubscribersMap: Map<string, string[]> = new Map([
-  ["coupon", ["subscriber1", "subscriber2"]],
-  ["order", ["subscriber3", "subscriber4"]],
+  ["coupon", []],
+  ["order", []],
 ]);
 
 export const IsSubscribeExists = (channel: string): boolean => {
@@ -12,5 +12,23 @@ export const GetSubscribers = async (channel: string): Promise<string[]> => {
     return channelSubscribersMap.get(channel) || [];
   } else {
     return [];
+  }
+};
+
+export const GetChannels = async (): Promise<string[]> => {
+  return Array.from(channelSubscribersMap.keys());
+};
+
+export const Subscribe = async (
+  subscriber: string,
+  channels: string[],
+): Promise<void> => {
+  for (const channel of channels) {
+    if (!channelSubscribersMap.has(channel)) {
+      channelSubscribersMap.set(channel, []);
+    }
+    const subscribers = channelSubscribersMap.get(channel) || [];
+    subscribers.push(subscriber);
+    channelSubscribersMap.set(channel, subscribers);
   }
 };

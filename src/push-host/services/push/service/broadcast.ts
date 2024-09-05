@@ -8,7 +8,7 @@ const signer = Wallet.createRandom();
 
 export const Broadcast = async (body: BroadcastRequest): Promise<string> => {
   const client = await Client.create(signer);
-  setImmediate(async () =>{
+  setImmediate(async () => {
     for (const channel in body.channels) {
       const subscribers = await GetSubscribers(channel);
       const broadcastClient = new BroadcastClient({
@@ -18,6 +18,6 @@ export const Broadcast = async (body: BroadcastRequest): Promise<string> => {
       });
       broadcastClient.broadcast([body.message], {});
     }
-  })
+  });
   return "Broadcasting message...";
 };
