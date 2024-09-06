@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../api/requests/prepare_request.dart';
+import '../../config/tx_configs.dart';
 import '../../utils/validate_util.dart';
 
 const _ORIGIN_DOMAIN = "https://demoweb.aastar.io";
@@ -23,34 +24,76 @@ const ORIGIN_DOMAIN = _ORIGIN_DOMAIN;
 
 class AccountController extends GetxController with StateMixin<AccountInfo> {
 
-  final _tokenAbiPath = "assets/contracts/TetherToken.json";
+  final _usdtTokenAbiPath = "assets/contracts/TetherToken.json";
+  final _nftTokenAbiPath = "assets/contracts/AAStarDemoNFT.json";
 
   Future<AccountInfo?> getAccountInfo() async {
     final resp = await Api().getAccountInfo();
     if (resp.success) {
       final account = AccountInfo.fromJson(resp.data!.toJson());
+      change(account, status: RxStatus.success());
+      update();
+
       await runZonedGuarded(() async{
-        final res = await getBalance(_tokenAbiPath, account.aa!);
-        account.balance = res;
+        final rpcUrl = op_sepolia.rpc;
+        final usdtContractAddress = op_sepolia.contracts.usdt;
+        final nftContractAddress = op_sepolia.contracts.nft;
+        final usdtBalance = await getBalance(rpcUrl, usdtContractAddress, _usdtTokenAbiPath, account.aa!);
+        final nftBalance = await getBalance(rpcUrl, nftContractAddress, _nftTokenAbiPath, account.aa!, decimals: false);
+        account.usdtBalance = usdtBalance;
+        account.nftBalance = nftBalance;
+        change(account, status: RxStatus.success());
+        update();
       }, (e, s) {
         logger.e(e.toString(), stackTrace: s);
       });
-      change(account, status: RxStatus.success());
-      update();
     }
     return null;
   }
 
+  mintUsdtAndMintNft() async{
+    final balances = await mintUsdtAndNFT(state!.aa!,
+        "_mint", _usdtTokenAbiPath,
+        "mint", _nftTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 5);
+    if(balances.isNotEmpty){
+      change(state?..usdtBalance = balances.first..nftBalance = balances.last, status: RxStatus.success());
+    }
+  }
+
+  mintNft() async{
+    final contractAddress = op_sepolia.contracts.nft;
+    final bundlerUrl = op_sepolia.bundler.first.url;
+    final rpcUrl = op_sepolia.rpc;
+    final paymasterUrl = op_sepolia.paymaster.first.url;
+    final paymasterParams = op_sepolia.paymaster.first.option?.toJson();
+
+    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "mint", _nftTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 5, decimals: false);
+    change(state?..nftBalance = balance, status: RxStatus.success());
+  }
+
   mintUsdt() async{
-   final balance = await mint(state!.aa!, "_mint", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amount: 5);
-   change(state?..balance = balance, status: RxStatus.success());
+   final contractAddress = op_sepolia.contracts.usdt;
+   final bundlerUrl = op_sepolia.bundler.first.url;
+   final rpcUrl = op_sepolia.rpc;
+   final paymasterUrl = op_sepolia.paymaster.first.url;
+   final paymasterParams = op_sepolia.paymaster.first.option?.toJson();
+
+   final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "_mint", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 5);
+   change(state?..usdtBalance = balance, status: RxStatus.success());
   }
 
   sendUsdt() async{
-    //0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db
-    //"0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F"
-    final balance = await mint(state!.aa!, "transfer", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amount: 1, receiver: "0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db");
-    change(state?..balance = balance, status: RxStatus.success());
+    final rcv0 = "0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db";
+    final rev1 = "0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F";
+
+    final contractAddress = op_sepolia.contracts.usdt;
+    final bundlerUrl = op_sepolia.bundler.first.url;
+    final rpcUrl = op_sepolia.rpc;
+    final paymasterUrl = op_sepolia.paymaster.first.url;
+    final paymasterParams = op_sepolia.paymaster.first.option?.toJson();
+
+    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "transfer", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 1, receiver: rcv0);
+    change(state?..usdtBalance = balance, status: RxStatus.success());
   }
 
   Future<GenericResponse> register(String email,

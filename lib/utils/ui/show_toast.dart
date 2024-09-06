@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../validate_util.dart';
 import 'loading_dialog.dart';
+import 'dart:math' as math;
 
 toast(String msg, {int duration = 1, int? gravity}) {
   if (isNotNull(msg)) {
@@ -31,4 +32,11 @@ showSnackMessage(BuildContext context, String message) {
       duration: Duration(seconds: 2),
     ),
   );
+}
+
+Color randomColor() {
+  final r = math.Random().nextInt(255);
+  final g = math.Random().nextInt(255);
+  final b = math.Random().nextInt(255);
+  return Color.fromARGB(255, r, g, b);
 }

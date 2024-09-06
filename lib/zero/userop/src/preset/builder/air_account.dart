@@ -73,15 +73,12 @@ class AirAccount extends UserOperationBuilder {
   }
 
   /// Initializes a AirAccount object and returns it.
-  static Future<AirAccount> init(String aa, String initCode, String rpcUrl, String origin, EthereumAddress smartContractAddress, {IPresetBuilderOpts? opts}) async {
+  static Future<AirAccount> init(String aa, String initCode, String rpcUrl, String origin, {IPresetBuilderOpts? opts}) async {
     final senderAddress = EthereumAddress.fromHex(aa);
     final instance = AirAccount(rpcUrl, opts: opts, sender: senderAddress);
 
     instance.initCode = initCode;
-    instance.proxy = simple_account_impl.SimpleAccount(
-      address: smartContractAddress,
-      client: instance.simpleAccountFactory.client,
-    );
+
     logger.i("${instance.proxy.self.address.toString()}");
     // final sender = entrypoint.callStatic.getsenddaddr(initCode)
     final baseInstance = instance.useDefaults({

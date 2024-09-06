@@ -9,7 +9,8 @@ class AccountInfo {
   String? eoa;
   String? aa;
   String? email;
-  String? balance;
+  String? usdtBalance;
+  String? nftBalance;
   @JsonKey(name: "private_key")
   String? privateKey;
 

@@ -6,6 +6,7 @@ import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../zero/example/airAccount/erc20_transfer.dart';
@@ -94,17 +95,17 @@ class _MainPageState extends State<MainPage> {
             (state) {
               return Column(children: [
                 Row(children: [
-                  Text("${state?.aa}\n${state?.initCode}"),
+                  Expanded(child: Text("${state?.aa}", overflow: TextOverflow.ellipsis)),
                   IconButton(onPressed: (){
                     Clipboard.setData(ClipboardData(text: "${state?.aa}")).then((_) => showSnackMessage(context, "Successfully"));
                   }, icon: Icon(Icons.content_copy))
-                ]),
+                ]).marginSymmetric(horizontal: 24),
                 const SizedBox(height: 20),
                 _buildSection(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(children: [
                     Text("USDT Balance", style: Theme.of(context).textTheme.titleMedium),
                     Spacer(),
-                    Text("\$${state?.balance ?? 0}", style: Theme.of(context).textTheme.titleLarge)
+                    Text("\$${state?.usdtBalance ?? 0}", style: Theme.of(context).textTheme.titleLarge)
                   ]),
                   const SizedBox(height: 20),
                   Wrap(spacing: 12, children: [
@@ -114,7 +115,9 @@ class _MainPageState extends State<MainPage> {
                     FilledButton(onPressed: (){
                       _accountCtrl.sendUsdt();
                     }, child: Text("Send"), style: buttonStyle),
-                    FilledButton(onPressed: (){}, child: Text("Mint USDT And Mint NFT"), style: buttonStyle)
+                    FilledButton(onPressed: (){
+                      _accountCtrl.mintUsdtAndMintNft();
+                    }, child: Text("Mint USDT And Mint NFT"), style: buttonStyle)
                   ]),
                 ])),
                 const SizedBox(height: 20),
@@ -122,10 +125,12 @@ class _MainPageState extends State<MainPage> {
                   Row(children: [
                     Text("NFT List", style: Theme.of(context).textTheme.titleMedium),
                     Spacer(),
-                    Text("\$0", style: Theme.of(context).textTheme.titleLarge)
+                    Text("\$${state?.nftBalance ?? 0}", style: Theme.of(context).textTheme.titleLarge)
                   ]),
                   const SizedBox(height: 20),
-                  FilledButton(onPressed: (){}, child: Text("Mint"), style: buttonStyle)
+                  FilledButton(onPressed: (){
+                      _accountCtrl.mintNft();
+                  }, child: Text("Mint"), style: buttonStyle)
                 ]))
               ]);
             }),
