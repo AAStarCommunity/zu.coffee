@@ -25,13 +25,15 @@ closeLoading() {
 }
 
 
-showSnackMessage(BuildContext context, String message) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text('${message}'),
-      duration: Duration(seconds: 2),
-    ),
-  );
+showSnackMessage(String message) {
+  if(Get.context != null) {
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
+      SnackBar(
+        content: Text('${message}'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
 }
 
 Color randomColor() {

@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailFormKey = GlobalKey<FormState>();
   final _pinCodeFormKey = GlobalKey<FormState>();
 
-  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "pinoyscavenger@h0tmal.com" : "");
+  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "anastasiya7260@dealyaari.com" : "");
   StreamController<ErrorAnimationType> _errorCtrl = StreamController<ErrorAnimationType>();
   TextEditingController _pinCodeCtrl = TextEditingController(text: kDebugMode ? "111111" : "");
 
@@ -81,10 +81,15 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.black,
       key: _scaffoldKey,
-      appBar: AppBar(title: Text("login".tr, style: Theme.of(context).textTheme.titleMedium)),
-      body: Column(children: [
-        Column(children: [
+      // appBar: AppBar(title: Text("login".tr, style: Theme.of(context).textTheme.titleMedium)),
+      body: Container(
+          width: Size.infinite.width,
+          height: Size.infinite.height,
+          decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/background.png"))),
+          child: Column(children: [
           Form(key: _emailFormKey, child: TextFormField(controller: _emailCtrl, decoration: decoration, validator: (value) {
             return _validateEmail(value);
           }).marginOnly(top: 80)),
@@ -93,9 +98,16 @@ class _LoginPageState extends State<LoginPage> {
             FocusScope.of(context).requestFocus(FocusNode());
             _login();
           }, child: Text("login".tr)).marginOnly(top: 50),
+          Spacer(),
+          Text("Fall in Love with Coffee in Blissful Delight!",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 30)).marginOnly(bottom: 20),
+          Text("Welcome to Zu.Coffee, where every cup is a delightful for you.",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelSmall),
+          SizedBox(height: context.width * .1)
           // TextButton(onPressed: (){}, child: Center(child: Text("还有没有账号，去注册")))
-        ]).paddingSymmetric(horizontal: 24)
-      ]),
+        ]).paddingSymmetric(horizontal: 24)),
     );
   }
 
