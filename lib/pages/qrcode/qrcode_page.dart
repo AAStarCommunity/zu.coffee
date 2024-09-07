@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:HexagonWarrior/pages/qrcode/transfer_dialog.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:HexagonWarrior/utils/validate_util.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -16,6 +14,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:ui' as ui;
 import '../../utils/ui/over_repaint_boundary.dart';
 import '../account/account_controller.dart';
+import 'scan_result_page.dart';
 
 class QRCodePage extends StatefulWidget {
 

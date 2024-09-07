@@ -9,6 +9,7 @@ const en = {
   "login": "Login",
   "mail": "Mail",
   "mailHint": "电子邮件地址",
+  "captureHint": "验证码",
   "mailHintError": "请输入有效的电子邮件地址",
   "settings": "Settings",
   "account": "Account",

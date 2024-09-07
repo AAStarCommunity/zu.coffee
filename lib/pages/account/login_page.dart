@@ -88,66 +88,7 @@ class _LoginPageState extends State<LoginPage> {
           Form(key: _emailFormKey, child: TextFormField(controller: _emailCtrl, decoration: decoration, validator: (value) {
             return _validateEmail(value);
           }).marginOnly(top: 80)),
-          if(_pinCodeVisible)Form(key: _pinCodeFormKey, child: PinCodeTextField(
-            appContext: context,
-            // pastedTextStyle: TextStyle(
-            //   color: Colors.green.shade600,
-            //   fontWeight: FontWeight.bold,
-            // ),
-            length: 6,
-            obscureText: true,
-            obscuringCharacter: '*',
-            // obscuringWidget: const FlutterLogo(
-            //   size: 24,
-            // ),
-            blinkWhenObscuring: true,
-            animationType: AnimationType.fade,
-            validator: _validatePinCode,
-            cursorColor: Theme.of(context).colorScheme.inverseSurface,
-            pinTheme: PinTheme(
-              shape: PinCodeFieldShape.box,
-              borderRadius: BorderRadius.circular(4),
-              fieldHeight: 50,
-              fieldWidth: 40,
-              // activeColor:,
-              // selectedColor:,
-              // inactiveColor:,
-              activeColor: Theme.of(context).colorScheme.onSecondaryFixed,
-              selectedColor: Theme.of(context).colorScheme.onSecondary,
-              inactiveColor: Theme.of(context).colorScheme.onSecondaryFixed,
-              activeFillColor: Theme.of(context).colorScheme.onSecondaryFixed,
-              selectedFillColor: Theme.of(context).colorScheme.onSecondary,
-              inactiveFillColor: Theme.of(context).colorScheme.onSecondaryFixed,
-            ),
-            // cursorColor: Colors.black,
-            animationDuration: const Duration(milliseconds: 300),
-            enableActiveFill: true,
-            errorAnimationController: _errorCtrl,
-            controller: _pinCodeCtrl,
-            errorTextMargin: EdgeInsets.only(left: 12),
-            errorTextSpace: 24,
-            keyboardType: TextInputType.text,
-            // boxShadows: const [
-            //   BoxShadow(
-            //     offset: Offset(0, 1),
-            //     color: Colors.black12,
-            //     blurRadius: 10,
-            //   )
-            // ],
-            // onCompleted: (v) {
-            //   debugPrint("Completed");
-            // },
-            // onTap: () {
-            //   print("Pressed");
-            // },
-            // onChanged: (value) {
-            //
-            // },
-            // beforeTextPaste: (text) {
-            //   debugPrint("Allowing to paste $text");
-            //   return true;
-            // },
-          ).marginOnly(top: 24)),
+          if(_pinCodeVisible)Form(key: _pinCodeFormKey, child: TextFormField(controller: _pinCodeCtrl, decoration: decoration.copyWith(hintText: "captureHint".tr)).marginOnly(top: 24)),
           CupertinoButton.filled(onPressed: () {
             FocusScope.of(context).requestFocus(FocusNode());
             _login();
