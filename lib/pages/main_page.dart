@@ -6,10 +6,8 @@ import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
-import '../zero/example/airAccount/erc20_transfer.dart';
+import 'package:HexagonWarrior/extensions/extensions.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/';
@@ -105,7 +103,7 @@ class _MainPageState extends State<MainPage> {
                   Row(children: [
                     Text("USDT Balance", style: Theme.of(context).textTheme.titleMedium),
                     Spacer(),
-                    Text("\$${state?.usdtBalance ?? 0}", style: Theme.of(context).textTheme.titleLarge)
+                    Text("\$${state?.usdtBalance?.trimTrailingZeros() ?? 0}", style: Theme.of(context).textTheme.titleLarge)
                   ]),
                   const SizedBox(height: 20),
                   Wrap(spacing: 12, children: [

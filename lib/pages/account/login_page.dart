@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
             FocusScope.of(context).requestFocus(FocusNode());
             _login();
           }, child: Text("login".tr)).marginOnly(top: 50),
-          TextButton(onPressed: (){}, child: Center(child: Text("还有没有账号，去注册")))
+          // TextButton(onPressed: (){}, child: Center(child: Text("还有没有账号，去注册")))
         ]).paddingSymmetric(horizontal: 24)
       ]),
     );

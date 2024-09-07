@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (_, __) => GetMaterialApp(
-          title: "HexagonWarrior",
+          title: "Zu.Coffee",
           initialBinding: BindingsBuilder(() async{
             Get.put(ThemeController());
             Get.put(AccountController());
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
           ],
           translations: AppTranslations(),
           supportedLocales: AppTranslations.supportedLocales,
-          locale: AppTranslations.locale,//Get.deviceLocale,//const Locale('zh', 'CN'),
+          locale: AppTranslations.locale ?? Get.deviceLocale,//const Locale('zh', 'CN'),
           fallbackLocale: AppTranslations.fallbackLocale,
         ));
   }

@@ -68,7 +68,7 @@ android {
         variant.outputs.all {
             def version = variant.versionName // 版本号
             def code = variant.versionCode // 版本号
-            outputFileName = "HexagonWarrior.${version}.${code}.apk"
+            outputFileName = "Zu.Coffee.${version}.${code}.apk"
         }
     }
 

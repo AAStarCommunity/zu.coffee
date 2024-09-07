@@ -37,3 +37,26 @@ extension SpExt on SharedPreferences{
   String? get language => getString("language");
 
 }
+
+extension StringExt on String {
+
+  String trimTrailingZeros() {
+
+    String number = this;
+
+    // 如果字符串不包含小数点，直接返回
+    if (!number.contains('.')) {
+      return number;
+    }
+
+    // 去掉末尾的零
+    number = number.replaceAll(RegExp(r'0+$'), '');
+
+    // 如果小数点成为了最后一个字符，去掉它
+    if (number.endsWith('.')) {
+      number = number.substring(0, number.length - 1);
+    }
+
+    return number;
+  }
+}
