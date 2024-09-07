@@ -1,6 +1,7 @@
 import 'package:HexagonWarrior/pages/account/login_page.dart';
 import 'package:HexagonWarrior/pages/account/register_page.dart';
 import 'package:HexagonWarrior/pages/qrcode/qrcode_page.dart';
+import 'package:HexagonWarrior/pages/qrcode/transfer_dialog.dart';
 import 'package:HexagonWarrior/pages/settings/settings_page.dart';
 import 'package:HexagonWarrior/routes/global_auth_middleware.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ final routes = <GetPage>[
   ]),
   GetPage(name: SettingsPage.routeName, page: () => SettingsPage()),
   GetPage(name: QRCodePage.routeName, page: () => QRCodePage()),
+  GetPage(name: ScanResultPage.routeName, page: () => ScanResultPage()),
   GetPage(name: ChangeThemePage.routeName, page: () => ChangeThemePage()),
   GetPage(name: ChangeLanguagePage.routeName, page: () => ChangeLanguagePage())
 ];

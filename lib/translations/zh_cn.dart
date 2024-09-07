@@ -17,6 +17,16 @@ const zhCN = {
   "appearance": "外观",
   "complete_pin_code" : "请输入有效的验证码",
   "codeSent": "验证码已发送",
+  "qrCode": "我的二维码",
+  "download": "保存",
+  "scanQrCode": "扫码",
+  "pay": "支付",
+  "address": "收款人",
+  "sender": "付款人",
+  "amount": "金额",
+  "wait": "处理中",
+  "paySuccess": "支付成功",
+  "scanResult": "扫码结果",
   ..._easy_refresh
 };
 

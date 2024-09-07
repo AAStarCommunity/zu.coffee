@@ -37,6 +37,7 @@ class Assets {
   static const String extensionsExtensions = 'lib/extensions/extensions.dart';
   static const String extensionsFilterOptions = 'lib/zero/userop/src/extensions/filter_options.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
+  static const String imagesIcon643x = 'assets/images/icon-64@3x.png';
   static const String kernelAddress = 'lib/zero/example/kernel/address.dart';
   static const String kernelBatchTransfer = 'lib/zero/example/kernel/batch_transfer.dart';
   static const String kernelErc20Transfer = 'lib/zero/example/kernel/erc20_transfer.dart';
@@ -62,6 +63,7 @@ class Assets {
   static const String presetIndex = 'lib/zero/userop/src/preset/index.dart';
   static const String profileMyProfile = 'lib/pages/profile/my_profile.dart';
   static const String qrcodeQrcodePage = 'lib/pages/qrcode/qrcode_page.dart';
+  static const String qrcodeTransferDialog = 'lib/pages/qrcode/transfer_dialog.dart';
   static const String requestsAssertionVerifyRequestBody = 'lib/api/requests/assertion_verify_request_body.dart';
   static const String requestsBindAccountRequest = 'lib/api/requests/bind_account_request.dart';
   static const String requestsBindAccountRequest.g = 'lib/api/requests/bind_account_request.g.dart';
@@ -128,6 +130,7 @@ class Assets {
   static const String typechainSimpleAccountFactory.abi = 'lib/zero/userop/src/typechain/SimpleAccountFactory.abi.json';
   static const String typechainSimpleAccountFactory.g = 'lib/zero/userop/src/typechain/SimpleAccountFactory.g.dart';
   static const String uiLoadingDialog = 'lib/utils/ui/loading_dialog.dart';
+  static const String uiOverRepaintBoundary = 'lib/utils/ui/over_repaint_boundary.dart';
   static const String uiShowToast = 'lib/utils/ui/show_toast.dart';
   static const String useropUserop = 'lib/zero/userop/userop.dart';
   static const String utilsAbiUtils = 'lib/zero/userop/src/utils/abi_utils.dart';

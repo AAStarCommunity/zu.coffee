@@ -87,7 +87,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(actions: [
           IconButton(onPressed: (){
             Get.toNamed(QRCodePage.routeName);
-          }, icon: Icon(CupertinoIcons.camera_viewfinder))
+          }, icon: Icon(CupertinoIcons.qrcode_viewfinder))
         ]),
         body: _accountCtrl.obx(
             onError: (err) => Center(child: Text("$err")),

@@ -82,7 +82,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
    change(state?..usdtBalance = balance, status: RxStatus.success());
   }
 
-  sendUsdt() async{
+  Future<String?> sendUsdt({String? receiver, int? amount}) async{
     final rcv0 = "0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db";
     final rev1 = "0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F";
 
@@ -92,8 +92,9 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
     final paymasterUrl = op_sepolia.paymaster.first.url;
     final paymasterParams = op_sepolia.paymaster.first.option?.toJson();
 
-    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "transfer", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 1, receiver: rcv0);
+    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "transfer", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: amount ?? 1, receiver: receiver ?? rcv0);
     change(state?..usdtBalance = balance, status: RxStatus.success());
+    return balance;
   }
 
   Future<GenericResponse> register(String email,
