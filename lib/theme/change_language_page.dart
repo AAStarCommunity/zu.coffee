@@ -20,7 +20,7 @@ class ChangeLanguagePage extends StatelessWidget {
           Card(child: ListView.separated(
                       itemCount: AppTranslations.supportLanguages.length,
                       separatorBuilder: (_, __) {
-                        return Divider(thickness: .5, height: 0)
+                        return Divider(thickness: .1, height: 0)
                             .paddingSymmetric(horizontal: 18);
                       },
                       itemBuilder: (_, index) {

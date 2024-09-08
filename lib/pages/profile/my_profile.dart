@@ -54,8 +54,9 @@ class MyProfile extends GetView<AccountController> {
                       TextSpan(text: "${state?.usdtBalance?.trimTrailingZeros() ?? 0}", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700, fontSize: 44))
                     ]))
                   ]),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    SizedBox(height: 30, child: CupertinoButton.filled(child: Text("charge".tr, style: TextStyle(fontSize: 14)), onPressed: () {
+                  Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
+                    Text("free".tr, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w100)).marginOnly(right: 10),
+                    SizedBox(height: 35, child: CupertinoButton.filled(child: Text("charge".tr, style: TextStyle(fontSize: 14)), onPressed: () {
                       showBiometricDialog(context, (index) {
                         if(index == 1){
                           runZonedGuarded(() async{
@@ -72,7 +73,7 @@ class MyProfile extends GetView<AccountController> {
                           });
                         }
                       });
-                    }, padding: EdgeInsets.symmetric(horizontal: 14), minSize: 20)),
+                    }, padding: EdgeInsets.symmetric(horizontal: 18), minSize: 20)),
                   ]).marginOnly(top: 12)
                 ]),
               ]).marginSymmetric(horizontal: 24)

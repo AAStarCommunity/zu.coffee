@@ -25,7 +25,7 @@ class SettingsPage extends StatelessWidget {
               child: ListView.separated(physics: NeverScrollableScrollPhysics(), shrinkWrap: true, itemBuilder: (_, index){
                 return items[index];
               }, separatorBuilder: (_, __){
-                return Divider(thickness: .5, height: 0).paddingSymmetric(horizontal: 18);
+                return Divider(thickness: .1, height: 0).paddingSymmetric(horizontal: 18);
               }, itemCount: items.length))
         ])).marginSymmetric(horizontal: 16),
     );

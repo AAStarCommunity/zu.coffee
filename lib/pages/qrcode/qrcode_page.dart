@@ -33,6 +33,7 @@ class _QRCodePageState extends State<QRCodePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text('qrCode'.tr, style: Theme.of(context).textTheme.titleMedium),
         actions: [
           // IconButton(onPressed: _startQRScan, icon: Icon(CupertinoIcons.camera_viewfinder))
@@ -67,12 +68,12 @@ class _QRCodePageState extends State<QRCodePage> {
                             SizedBox(width: context.width - 100, height: context.width - 100, child: PrettyQrView.data(
                               data: state?.aa ?? "",
                               decoration: const PrettyQrDecoration(
-                                image: PrettyQrDecorationImage(
-                                  image: AssetImage('assets/images/ic_launcher.png'),
-                                ),
+                                // image: PrettyQrDecorationImage(
+                                //   image: AssetImage('assets/images/ic_launcher.png'),
+                                // ),
                               ),
-                            )).paddingSymmetric(vertical: 50),
-                            // const Text("扫描二维码，马上认识我")
+                            )).paddingOnly(top: 50, bottom: 12),
+                            Text("${state?.aa}", style: TextStyle(fontSize: 8), overflow: TextOverflow.ellipsis).marginOnly(bottom: 50)
                           ])),
                     )),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [

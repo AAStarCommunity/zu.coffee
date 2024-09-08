@@ -13,7 +13,7 @@ class ChangeThemePage extends GetView<ThemeController> {
         appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor, title: Text("theme".tr, style: Theme.of(context).textTheme.titleMedium)),
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Card(child: ListView.separated(itemCount: ThemeModel.themes.length, separatorBuilder: (_, __) {
-          return Divider(thickness: .5, height: 0)
+          return Divider(thickness: .1, height: 0)
               .paddingSymmetric(horizontal: 18);
         }, itemBuilder: (_, index) {
             var model = ThemeModel.themes[index];

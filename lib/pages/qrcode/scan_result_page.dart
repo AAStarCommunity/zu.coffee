@@ -16,6 +16,8 @@ class ScanResultPage extends GetView<AccountController> {
 
   ScanResultPage({super.key});
 
+  final _amount = "".obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(title: Text("scanResult".tr, style: Theme.of(context).textTheme.titleMedium), backgroundColor: Theme.of(context).scaffoldBackgroundColor), body: LayoutBuilder(builder: (_, __){
@@ -23,16 +25,24 @@ class ScanResultPage extends GetView<AccountController> {
       if(!isNotNull(codeData)) {
         return Center(child: Text("Invalid data"));
       }
-      final codeMap = jsonDecode(codeData!);
-      final shareData = ShareData.fromJson(codeMap);
-      final address = shareData.receiver;
+
+      var address = codeData;
       final sender = controller.state?.aa;
-      final coffeeMap = jsonDecode(shareData.coffee);
-      final coffee = Coffee.fromJson(coffeeMap);
-      final maxWidth = context.width / 2;
-      final size = coffeeMap["size"];
+      var coffee = null;
+      var size = null;
+      final isAddress = codeData!.startsWith("0x");
+
       return SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [CoffeeWidget(coffee: coffee, size: size, maxWidth: maxWidth, bottom: SizedBox())], mainAxisAlignment: MainAxisAlignment.center),
+        if(!isAddress)LayoutBuilder(builder: (_, __){
+          final codeMap = jsonDecode(codeData!);
+          final shareData = ShareData.fromJson(codeMap);
+          address = shareData.receiver;
+          final coffeeMap = jsonDecode(shareData.coffee);
+          coffee = Coffee.fromJson(coffeeMap);
+          final maxWidth = context.width / 2;
+          size = coffeeMap["size"];
+          return Row(children: [CoffeeWidget(coffee: coffee, size: size, maxWidth: maxWidth, bottom: SizedBox())], mainAxisAlignment: MainAxisAlignment.center);
+        }),
         const SizedBox(height: 20),
         Text("${"address".tr}：", style: TextStyle(fontWeight: FontWeight.w600)),
         Text("$address"),
@@ -42,7 +52,13 @@ class ScanResultPage extends GetView<AccountController> {
         const SizedBox(height: 8),
         Row(children: [
           Text("${"amount".tr}：", style: TextStyle(fontWeight: FontWeight.w600)),
-          Text("${coffee.getPrice(size)} ", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16, fontWeight: FontWeight.bold)),
+          coffee != null ? Text("${coffee.getPrice(size)} ", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16, fontWeight: FontWeight.bold)) : Expanded(child: TextField(
+            decoration: InputDecoration(hintText: "enterAmount".tr, hintStyle: TextStyle(fontSize: 12)),
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            onChanged: (v) {
+              _amount.value = v;
+            },
+          )),
           //Text("USDT Blance：${}")
         ]),
         const SizedBox(height: 24),
@@ -50,13 +66,21 @@ class ScanResultPage extends GetView<AccountController> {
           return Row(children: [FilledButton(onPressed: () async{
             await showBiometricDialog(context, (index) async{
               if(index == 1) {
+                final amountStr = _amount.value;
+                if(!isNotNull(amountStr) || num.parse(amountStr) == 0) {
+                  return;
+                }
+                if(address == sender) {
+                  showSnackMessage("accountEqual".tr);
+                  return;
+                }
                 if(handing.value) {
                   toast("wait".tr);
                   return;
                 }
                 await runZonedGuarded(() async {
                   handing.value = true;
-                  final balance = await Get.find<AccountController>().sendUsdt(receiver: address, amount: 1);
+                  final balance = await Get.find<AccountController>().sendUsdt(receiver: address, amount: num.parse(amountStr));
                   handing.value = false;
                   if(isNotNull(balance)) {
                     toast("paySuccess".tr);

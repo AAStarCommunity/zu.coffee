@@ -39,6 +39,9 @@ const zhCN = {
   "generating": "正在生成",
   "saveSuc": "保存成功",
   "saveFail": "生成长图失败",
+  "free": "免费",
+  "enterAmount": "请输入金额",
+  "accountEqual": "收付款账号不能为同一账户",
   ..._easy_refresh
 };
 

@@ -77,9 +77,11 @@ class _LoginPageState extends State<LoginPage> {
 
     final decoration = InputDecoration(
       hintText: "mailHint".tr,
+      hintStyle: TextStyle(color: Colors.white.withOpacity(.5)),
       border: OutlineInputBorder()
     );
 
+    final textStyle = TextStyle(color: Colors.white);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
@@ -93,15 +95,15 @@ class _LoginPageState extends State<LoginPage> {
           Row(children: [
             Text.rich(TextSpan(children: [
               TextSpan(text: "Welcome",
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 44)),
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white,fontSize: 44)),
               TextSpan(text: "\nto Zu.Coffee",
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 24))
             ]), textAlign: TextAlign.start)
           ]).marginOnly(top: kToolbarHeight, bottom: 24),
-          Form(key: _emailFormKey, child: TextFormField(controller: _emailCtrl, decoration: decoration, validator: (value) {
+          Form(key: _emailFormKey, child: TextFormField(controller: _emailCtrl, style: textStyle, decoration: decoration, validator: (value) {
             return _validateEmail(value);
           })),
-          if(_pinCodeVisible)Form(key: _pinCodeFormKey, child: TextFormField(controller: _pinCodeCtrl, decoration: decoration.copyWith(hintText: "captureHint".tr)).marginOnly(top: 24)),
+          if(_pinCodeVisible)Form(key: _pinCodeFormKey, child: TextFormField(controller: _pinCodeCtrl, style: textStyle, decoration: decoration.copyWith(hintText: "captureHint".tr)).marginOnly(top: 24)),
           CupertinoButton.filled(onPressed: () {
             FocusScope.of(context).requestFocus(FocusNode());
             _login();
@@ -109,10 +111,10 @@ class _LoginPageState extends State<LoginPage> {
           Spacer(),
           Text("Fall in Love with Coffee in Blissful Delight!",
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 30)).marginOnly(bottom: 20),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 30)).marginOnly(bottom: 20),
           SizedBox(height: context.width * .1)
           // TextButton(onPressed: (){}, child: Center(child: Text("还有没有账号，去注册")))
-        ])),
+        ]).marginSymmetric(horizontal: 24)),
     );
   }
 
