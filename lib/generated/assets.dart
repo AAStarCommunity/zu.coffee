@@ -49,10 +49,11 @@ class Assets {
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String homeCoffeeDetailsPage = 'lib/pages/home/coffee_details_page.dart';
   static const String homeCoffeeListPage = 'lib/pages/home/coffee_list_page.dart';
+  static const String homeShareCoffeeBottomSheet = 'lib/pages/home/share_coffee_bottom_sheet.dart';
   static const String imagesBackground = 'assets/images/background.png';
   static const String imagesBanner = 'assets/images/banner.png';
   static const String imagesDefAvatar = 'assets/images/def_avatar.png';
-  static const String imagesIcon643x = 'assets/images/icon-64@3x.png';
+  static const String imagesIcLauncher = 'assets/images/ic_launcher.png';
   static const String imagesP1 = 'assets/images/p1.jpg';
   static const String imagesP2 = 'assets/images/p2.jpg';
   static const String imagesP3 = 'assets/images/p3.jpg';

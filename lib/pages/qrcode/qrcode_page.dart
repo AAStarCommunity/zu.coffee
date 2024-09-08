@@ -26,79 +26,8 @@ class QRCodePage extends StatefulWidget {
 }
 
 class _QRCodePageState extends State<QRCodePage> {
-
   GlobalKey<OverRepaintBoundaryState> _repaintKey = GlobalKey();
   final _accountCtrl = Get.find<AccountController>();
-  bool isShow = false;
-
-  _requestPermission(BuildContext context, VoidCallback pass) async {
-    if(!(await Permission.photos.isGranted)){
-      PermissionStatus res;
-      if (Platform.isAndroid) {
-        final androidInfo = await DeviceInfoPlugin().androidInfo;
-        if (androidInfo.version.sdkInt <= 32) {
-          res = await Permission.storage.request();
-        }  else {
-          res = await Permission.photos.request();
-        }
-      } else {
-        res = await Permission.photos.request();
-      }
-      if(res.isGranted) {
-        pass.call();
-      } else {
-        isShow = false;
-        toast("请打开存储权限");
-        openAppSettings();
-      }
-    }else{
-      if(pass != null) pass();
-    }
-  }
-
-  _saveImage(BuildContext context) async{
-    try {
-      if (isShow) {
-        showLoading(msg: "正在生成");
-        return;
-      }
-      isShow = true;
-      var renderObject = _repaintKey.currentContext?.findRenderObject();
-
-      var boundary = renderObject! as RenderRepaintBoundary;
-      ui.Image captureImage = await boundary.toImage(
-          pixelRatio:
-          2); //pixelRatio: FlutterCallAndroidBridge.instance.phoneDevicePixelRatio as double
-
-      ByteData? byteData = await captureImage.toByteData(format: ui.ImageByteFormat.png);
-      if(byteData == null){
-        return;
-      }
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-      _requestPermission(context, () async{
-        final path = await ImageGallerySaver.saveImage(pngBytes);
-        if(path != null){
-          isShow = false;
-          toast("保存成功");
-        }
-      });
-      /*String path = "";
-                    if (path == "") {
-                      final directory = (await getTemporaryDirectory()).path;
-                      String fileName = DateTime.now().toIso8601String();
-                      path = '$directory/$fileName.png';
-                    }
-                    File imgFile = new File(path);
-                    await imgFile.writeAsBytes(pngBytes).then((path) {
-                      debugPrint("地址：$path");
-                    });*/
-    } catch (error) {
-      debugPrint(error.toString());
-      toast("生成长图失败");
-      isShow = false;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +68,7 @@ class _QRCodePageState extends State<QRCodePage> {
                               data: state?.aa ?? "",
                               decoration: const PrettyQrDecoration(
                                 image: PrettyQrDecorationImage(
-                                  image: AssetImage('assets/images/icon-64@3x.png'),
+                                  image: AssetImage('assets/images/ic_launcher.png'),
                                 ),
                               ),
                             )).paddingSymmetric(vertical: 50),
@@ -151,7 +80,8 @@ class _QRCodePageState extends State<QRCodePage> {
                   const SizedBox(width: 40),
                   FilledButton(
                     onPressed: () {
-                      _saveImage(context);
+                      _repaintKey.currentState?.saveImage(context);
+                      //_saveImage(context);
                     },
                     child: Text('download'.tr),
                   ).marginOnly(top: 24),

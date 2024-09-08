@@ -35,6 +35,10 @@ const zhCN = {
   "disagree": "不同意",
   "agree": "同意",
   "buyNow": "购买",
+  "noMoreData": "暂无数据",
+  "generating": "正在生成",
+  "saveSuc": "保存成功",
+  "saveFail": "生成长图失败",
   ..._easy_refresh
 };
 

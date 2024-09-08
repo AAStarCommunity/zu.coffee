@@ -1,5 +1,26 @@
 import 'package:flutter/material.dart';
 
+
+class ShareData {
+  late String receiver;
+  late String coffee;
+
+  ShareData(this.receiver, this.coffee);
+
+  ShareData.fromJson(Map<String, dynamic> json){
+    this.receiver = json['receiver'];
+    this.coffee = json['data'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "receiver": receiver,
+      "data": coffee
+    };
+  }
+}
+
+
 class Coffee {
   final int category;
   final AssetImage image;
@@ -30,7 +51,53 @@ class Coffee {
     required this.prefixMedium,
     required this.prefixLarge,
   });
+
+  Map<String, dynamic> toJson(String size) {
+    return {
+      'size': size,
+      'category': category,
+      'image': image.assetName,
+      'ratting': ratting,
+      'name': name,
+      'mix': mix,
+      'price': price,
+      'mediumPrice': mediumPrice,
+      'largePrice': largePrice,
+      'mediumRating': mediumRating,
+      'largeRating': largeRating,
+      'prefix': prefix,
+      'prefixMedium': prefixMedium,
+      'prefixLarge': prefixLarge,
+    };
+  }
+
+  factory Coffee.fromJson(Map<String, dynamic> json) {
+    return Coffee(
+      category: json['category'] as int,
+      image: AssetImage(json['image'] as String),
+      ratting: json['ratting'] as num,
+      name: json['name'] as String,
+      mix: json['mix'] as String,
+      price: json['price'] as num,
+      mediumPrice: json['mediumPrice'] as num,
+      largePrice: json['largePrice'] as num,
+      mediumRating: json['mediumRating'] as num,
+      largeRating: json['largeRating'] as num,
+      prefix: json['prefix'] as String,
+      prefixMedium: json['prefixMedium'] as String,
+      prefixLarge: json['prefixLarge'] as String,
+    );
+  }
 }
+
+extension CoffeeExt on Coffee {
+
+  String getPrice(String size){
+    return "${size == "S" ? price : size == "M" ? mediumPrice : largePrice}";
+  }
+
+}
+
 
 final _goods = <Coffee>[];
 
@@ -197,26 +264,26 @@ var _prefixLarge = [
   "(1.123)",
 ];
 var _mediumPrice = [
-  "5.10",
-  "6.20",
-  "3.56",
-  "4.77",
-  "2.64",
-  "7.25",
-  "3.86",
-  "8.56",
-  "10.84",
-  "6.98",
+  "5",
+  "6",
+  "3",
+  "4",
+  "2",
+  "7",
+  "3",
+  "8",
+  "10",
+  "6",
 ];
 var _largePrice = [
-  "6.03",
-  "7.21",
-  "4.23",
-  "5.45",
-  "3.32",
-  "8.44",
-  "3.09",
-  "9.87",
-  "11.63",
-  "7.57",
+  "6",
+  "7",
+  "4",
+  "5",
+  "3",
+  "8",
+  "3",
+  "9",
+  "11",
+  "7",
 ];

@@ -30,7 +30,7 @@ UserOperationMiddlewareFn verifyingPaymaster(
     );
 
     ctx.op.paymasterAndData = pm.paymasterAndData;
-    ctx.op.preVerificationGas = BigInt.parse(pm.preVerificationGas) * BigInt.from(1.8);
+    ctx.op.preVerificationGas = BigInt.parse(pm.preVerificationGas);
     ctx.op.verificationGasLimit = BigInt.parse(pm.verificationGasLimit);
     ctx.op.callGasLimit = BigInt.parse(pm.callGasLimit);
   };

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:HexagonWarrior/pages/account/account_controller.dart';
+import 'package:HexagonWarrior/pages/home/share_coffee_bottom_sheet.dart';
 import 'package:HexagonWarrior/theme/app_colors.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,7 +64,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                           ), onTap: (){
                             Get.back();
                           }),
-                          Container(
+                          InkWell(child: Container(
                               height: 40,
                               width: 40,
                               decoration: BoxDecoration(
@@ -74,7 +75,9 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                                   Icons.save_alt,
                                   color: Colors.orange
                               )
-                          )
+                          ), onTap: () {
+                            Get.bottomSheet(ShareCoffeeBottomSheet(coffee: widget.coffee, size: s ? "S" : m ? "M" : "L"), isScrollControlled: true);
+                          })
                         ],
                       ),
                     ),

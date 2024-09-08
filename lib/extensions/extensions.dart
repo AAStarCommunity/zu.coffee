@@ -43,7 +43,7 @@ extension SpExt on SharedPreferences{
     final transactions = getString(key);
     if(isNotNull(transactions)) {
       final obj = jsonDecode(transactions!);
-      obj[userOpHash] = transactionHash;
+      obj[userOpHash] = "${transactionHash}_${DateTime.now().toUtc().toString()}";
       setString(key, jsonEncode(obj));
     } else {
       final kv = <String, dynamic>{"${userOpHash}": transactionHash};

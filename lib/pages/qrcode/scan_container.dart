@@ -1,3 +1,4 @@
+import 'package:HexagonWarrior/main.dart';
 import 'package:HexagonWarrior/pages/qrcode/scan_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,13 +36,14 @@ class _ScanContainerState extends State<ScanActionContainer>{
   void _onQRViewCreated(QRViewController controller, String sender) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
+      logger.i("scan code : ${scanData.code}");
       final code = scanData.code;
       if(isNotNull(code)) {
         if(_flag){
           return;
         }
         _flag = true;
-        Get.toNamed(ScanResultPage.routeName, parameters: {"code" : code!})?.then((_){
+        Get.offAndToNamed(ScanResultPage.routeName, parameters: {"code" : code!})?.then((_){
           _flag = false;
         });
       }
