@@ -29,7 +29,7 @@ class _TransactionPageState extends State<TransactionPage> {
           return Card(child: ListTile(
               contentPadding: EdgeInsets.only(left: 12),
               trailing: IconButton(icon: Icon(Icons.arrow_forward_ios_rounded), onPressed: () {
-                final path = '${op_sepolia.blockExplorerURL}/tx/${sp[key]}';
+                final path = '${op_sepolia.blockExplorerURL}/tx/${values[0]}';
                 logger.i("open url ${path}");
                 launchUrl(Uri.parse(path));
               }),

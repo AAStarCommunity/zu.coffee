@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:HexagonWarrior/extensions/extensions.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../../utils/ui/show_toast.dart';
 import '../account/login_page.dart';
 import '../qrcode/qrcode_page.dart';
@@ -17,7 +18,11 @@ import '../qrcode/qrcode_page.dart';
 class MyProfile extends GetView<AccountController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor, actions: [
+    return Scaffold(appBar: AppBar(
+        title: FutureBuilder(future: PackageInfo.fromPlatform(), builder: (_, snapshot) {
+          return Text(snapshot.data == null ? "" : "version  ${snapshot.data?.version}.${snapshot.data?.buildNumber}", style: TextStyle(fontSize: 12));
+        }),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor, actions: [
       IconButton(onPressed: (){
         Get.toNamed(QRCodePage.routeName);
       }, icon: Icon(CupertinoIcons.qrcode_viewfinder))
