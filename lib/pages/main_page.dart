@@ -8,6 +8,7 @@ import '../utils/ui/show_toast.dart';
 import 'account/account_controller.dart';
 import 'account/login_page.dart';
 import 'settings/settings_page.dart';
+import 'wallet/transaction_page.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/';
@@ -86,7 +87,8 @@ class _MainPageState extends State<MainPage> {
         }),
         body: PageView(physics: NeverScrollableScrollPhysics(), controller: _pageController, children: [
           CoffeeListPage(),
-          MyProfile()
+          MyProfile(),
+          TransactionPage()
         ]));
   }
 }

@@ -44,12 +44,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 Icons.shopify,
                 color: index == 1 ? AppColors.caramelBrown : Colors.grey.withOpacity(.6),
               )),
-          // BottomNavigationBarItem(
-          //     label: "Favourite",
-          //     icon: Icon(
-          //       Icons.favorite,
-          //       color: index==2?Colors.orange:Colors.grey.withOpacity(.6),
-          //     )),
+          BottomNavigationBarItem(
+              label: "Transaction",
+              icon: Icon(
+                Icons.list,
+                color: index==2?Colors.orange:Colors.grey.withOpacity(.6),
+              )),
           // BottomNavigationBarItem(
           //     label: "Favourite",
           //     icon: Icon(

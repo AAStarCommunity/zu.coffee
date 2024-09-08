@@ -59,8 +59,15 @@ class MyProfile extends GetView<AccountController> {
                       showBiometricDialog(context, (index) {
                         if(index == 1){
                           runZonedGuarded(() async{
-                            controller.mintUsdt();
+                            showLoading();
+                            final res = await controller.mintUsdt();
+                            closeLoading();
+                            if(isNotNull(res)) {
+                              showSnackMessage("Charge successfully");
+                            }
                           }, (e, s) {
+                            closeLoading();
+                            if(!e.toString().contains("filter"))showSnackMessage(e.toString());
                             logger.e("mintUsdtError", error: e, stackTrace: s);
                           });
                         }

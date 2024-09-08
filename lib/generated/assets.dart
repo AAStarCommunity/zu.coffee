@@ -171,6 +171,7 @@ class Assets {
   static const String utilsContracts = 'lib/zero/userop/src/utils/contracts.dart';
   static const String utilsUtils = 'lib/zero/userop/src/utils/utils.dart';
   static const String utilsValidateUtil = 'lib/utils/validate_util.dart';
+  static const String walletTransactionPage = 'lib/pages/wallet/transaction_page.dart';
   static const String walletWalletPage = 'lib/pages/wallet/wallet_page.dart';
   static const String webauthnBase64 = 'lib/utils/webauthn/base64.dart';
   static const String webauthnUint8listConverter = 'lib/utils/webauthn/uint8list_converter.dart';

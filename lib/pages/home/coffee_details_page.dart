@@ -446,7 +446,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                   });
                 }, (e, s){
                    closeLoading();
-                   showSnackMessage(e.toString());
+                   if(!e.toString().contains("filter"))showSnackMessage(e.toString());
                 });
               }
             });

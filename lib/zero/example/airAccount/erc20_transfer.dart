@@ -3,12 +3,15 @@ import 'dart:io';
 
 import 'package:HexagonWarrior/config/tx_configs.dart';
 import 'package:HexagonWarrior/config/tx_network.dart';
+import 'package:HexagonWarrior/extensions/extensions.dart';
 import 'package:HexagonWarrior/main.dart';
 import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/utils/validate_util.dart';
 import 'package:HexagonWarrior/zero/userop/src/preset/builder/air_account.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math' as math;
 import '../../userop/userop.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -85,6 +88,7 @@ Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, S
   debugPrint('Waiting for transaction...');
   final ev = await res.wait();
   debugPrint('Transaction hash: ${ev?.transactionHash}');
+  if(isNotNull(ev?.transactionHash))Get.find<SharedPreferences>().saveTransactionHash(res.userOpHash, ev?.transactionHash);
   return await getBalance(rpcUrl, contractAddress, tokenAbiPath, aaAddress, decimals: decimals);
 }
 

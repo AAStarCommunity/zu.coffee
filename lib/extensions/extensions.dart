@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/validate_util.dart';
@@ -36,6 +38,28 @@ extension SpExt on SharedPreferences{
 
   String? get language => getString("language");
 
+  saveTransactionHash(String userOpHash, transactionHash) {
+    final key = "transaction";
+    final transactions = getString(key);
+    if(isNotNull(transactions)) {
+      final obj = jsonDecode(transactions!);
+      obj[userOpHash] = transactionHash;
+      setString(key, jsonEncode(obj));
+    } else {
+      final kv = <String, dynamic>{"${userOpHash}": transactionHash};
+      setString(key, jsonEncode(kv));
+    }
+  }
+
+  Map<String, dynamic> getTransactionHashes() {
+    final key = "transaction";
+    final transactions = getString(key);
+    if(isNotNull(transactions)) {
+      return jsonDecode(transactions!);
+    } else {
+      return <String, dynamic>{};
+    }
+  }
 }
 
 extension StringExt on String {
