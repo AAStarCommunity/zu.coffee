@@ -45,7 +45,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
         change(account, status: RxStatus.success());
         update();
       }, (e, s) {
-        logger.e(e.toString(), stackTrace: s);
+        logger.e("getAccountInfo", error: e, stackTrace: s);
       });
     }
     return null;
@@ -71,7 +71,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
     change(state?..nftBalance = balance, status: RxStatus.success());
   }
 
-  mintUsdt() async{
+  Future<String?> mintUsdt() async{
    final contractAddress = op_sepolia.contracts.usdt;
    final bundlerUrl = op_sepolia.bundler.first.url;
    final rpcUrl = op_sepolia.rpc;
@@ -80,9 +80,10 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
 
    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "_mint", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 5);
    change(state?..usdtBalance = balance, status: RxStatus.success());
+   return balance;
   }
 
-  Future<String?> sendUsdt({String? receiver, int? amount}) async{
+  Future<String?> sendUsdt({String? receiver, num? amount}) async{
     final rcv0 = "0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db";
     final rev1 = "0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F";
 

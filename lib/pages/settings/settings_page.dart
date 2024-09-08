@@ -17,7 +17,7 @@ class SettingsPage extends StatelessWidget {
       }),
     ];
     return Scaffold(
-        appBar: AppBar(title: Text('settings'.tr, style: Theme.of(context).textTheme.titleMedium)),
+        appBar: AppBar(title: Text('settings'.tr, style: Theme.of(context).textTheme.titleMedium), backgroundColor: Theme.of(context).scaffoldBackgroundColor),
         body: SingleChildScrollView(child: Column(children: [
           Card(
               clipBehavior: Clip.hardEdge,

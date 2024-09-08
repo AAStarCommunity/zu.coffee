@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:HexagonWarrior/pages/qrcode/scan_container.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:HexagonWarrior/utils/validate_util.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -27,16 +28,7 @@ class QRCodePage extends StatefulWidget {
 class _QRCodePageState extends State<QRCodePage> {
 
   GlobalKey<OverRepaintBoundaryState> _repaintKey = GlobalKey();
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
   final _accountCtrl = Get.find<AccountController>();
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
   bool isShow = false;
 
   _requestPermission(BuildContext context, VoidCallback pass) async {
@@ -108,51 +100,6 @@ class _QRCodePageState extends State<QRCodePage> {
     }
   }
 
-  bool _flag = false;
-
-  void _onQRViewCreated(QRViewController controller, String sender) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      final code = scanData.code;
-      if(isNotNull(code)) {
-        if(_flag){
-          return;
-        }
-        _flag = true;
-        Get.offAndToNamed(ScanResultPage.routeName, parameters: {"code" : code!})?.then((_){
-          _flag = false;
-        });
-      }
-    });
-  }
-
-  void _startQRScan(String sender) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Scaffold(
-              extendBodyBehindAppBar: true,
-              appBar: AppBar(
-                leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.white), onPressed: () {
-                  Get.back();
-                }),
-                backgroundColor: Colors.transparent,
-                //title: Text('Scan QR Code', style: Theme.of(context).textTheme.titleMedium),
-              ),
-              body: QRView(
-                key: qrKey,
-                onQRViewCreated: (ctrl) {
-                  _onQRViewCreated(ctrl, sender);
-                },
-                overlay: QrScannerOverlayShape(
-                  borderColor: Colors.red,
-                  borderRadius: 10,
-                  borderLength: 30,
-                  borderWidth: 10,
-                  cutOutSize: 300,
-                ),
-              ),
-            )));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,12 +147,7 @@ class _QRCodePageState extends State<QRCodePage> {
                           ])),
                     )),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  FilledButton(
-                    onPressed: () {
-                      _startQRScan(state?.aa ?? "");
-                    },
-                    child: Text('scanQrCode'.tr),
-                  ).marginOnly(top: 24),
+                  ScanActionContainer(child: FilledButton(onPressed: () {  }, child: Text('scanQrCode'.tr)), sender: state?.aa ?? "").marginOnly(top: 24),
                   const SizedBox(width: 40),
                   FilledButton(
                     onPressed: () {

@@ -29,6 +29,12 @@ const zhCN = {
   "wait": "处理中",
   "paySuccess": "支付成功",
   "scanResult": "扫码结果",
+  "charge": "充值",
+  "dialogTitle": "生物识别提醒",
+  "dialogContent": "每次操作都需要进行生物识别才能继续。您是否同意?",
+  "disagree": "不同意",
+  "agree": "同意",
+  "buyNow": "购买",
   ..._easy_refresh
 };
 

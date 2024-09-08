@@ -36,6 +36,36 @@ showSnackMessage(String message) {
   }
 }
 
+Future<T?>showBiometricDialog<T>(BuildContext context, ValueChanged<int> callback) {
+  return showDialog<T>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('dialogTitle'.tr),
+        content: Text('dialogContent'.tr),
+        actions: <Widget>[
+          TextButton(
+            child: Text('disagree'.tr),
+            onPressed: () {
+              Navigator.of(context).pop();
+              // 这里可以添加用户不同意时的逻辑
+              callback.call(0);
+            },
+          ),
+          TextButton(
+            child: Text('agree'.tr),
+            onPressed: () {
+              Navigator.of(context).pop();
+              callback?.call(1);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 Color randomColor() {
   final r = math.Random().nextInt(255);
   final g = math.Random().nextInt(255);

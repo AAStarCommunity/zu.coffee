@@ -1,3 +1,8 @@
+import 'dart:async';
+
+import 'package:HexagonWarrior/pages/account/account_controller.dart';
+import 'package:HexagonWarrior/theme/app_colors.dart';
+import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -58,18 +63,18 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                           ), onTap: (){
                             Get.back();
                           }),
-                          // Container(
-                          //     height: 40,
-                          //     width: 40,
-                          //     decoration: BoxDecoration(
-                          //       color: Colors.black,
-                          //       borderRadius: BorderRadius.circular(10),
-                          //     ),
-                          //     child: const Icon(
-                          //         Icons.favorite,
-                          //         color: Colors.orange
-                          //     )
-                          // )
+                          Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Icon(
+                                  Icons.save_alt,
+                                  color: Colors.orange
+                              )
+                          )
                         ],
                       ),
                     ),
@@ -99,25 +104,20 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                                   crossAxisAlignment:
                                   CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      widget.coffee.name,
+                                    Text(widget.coffee.name,
                                       style: const TextStyle(
                                           fontSize: 25,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          decoration:
-                                          TextDecoration.none),
+                                          decoration: TextDecoration.none),
                                     ),
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Text(widget.coffee.mix,
-                                        style: TextStyle(
+                                    Text(widget.coffee.mix, style: TextStyle(
                                             fontSize: 17,
-                                            color: Colors.white
-                                                .withOpacity(.5),
-                                            decoration:
-                                            TextDecoration.none)),
+                                            color: Colors.white.withOpacity(.5),
+                                            decoration: TextDecoration.none)),
                                     const SizedBox(
                                       height: 15,
                                     ),
@@ -266,8 +266,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
               SizedBox(height: 10),
               Text(
                 "Description",
-                style: TextStyle(
-                  color: Colors.white.withOpacity(.5),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -275,10 +274,9 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
               const SizedBox(
                 height: 14,
               ),
-              const Text(
+              Text(
                 "A cappuccino is the perfect balance of espresso, steamed milk. This coffee is all about the structure.",
-                style: TextStyle(
-                  color: Colors.white,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontSize: 15,
                 ),
               ),
@@ -287,8 +285,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
               ),
               Text(
                 "Size",
-                style: TextStyle(
-                  color: Colors.white.withOpacity(.5),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -313,7 +310,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                         height: 40,
                         width: 110,
                         decoration: BoxDecoration(
-                            color: s ? Colors.black : Colors.white.withOpacity(.1),
+                            color: s ? Colors.black : Theme.of(context).colorScheme.onSurface.withOpacity(.2),
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: s ? Colors.orange : Colors.transparent)
                         ),
@@ -343,7 +340,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                         height: 40,
                         width: 110,
                         decoration: BoxDecoration(
-                            color: m ? Colors.black : Colors.white.withOpacity(.1),
+                            color: m ? Colors.black : Theme.of(context).colorScheme.onSurface.withOpacity(.2),
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all( color: m ? Colors.orange : Colors.transparent)),
                         child: Center(
@@ -372,7 +369,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                         height: 40,
                         width: 110,
                         decoration: BoxDecoration(
-                            color: l ? Colors.black : Colors.white.withOpacity(.1),
+                            color: l ? Colors.black : Theme.of(context).colorScheme.onSurface.withOpacity(.2),
                             borderRadius:
                             BorderRadius.circular(10),
                             border: Border.all(color: l ? Colors.orange : Colors.transparent)),
@@ -398,7 +395,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
           ).marginSymmetric(horizontal: 18),
         ],
       )),
-      bottomNavigationBar: Container(padding: EdgeInsets.symmetric(horizontal: 12), color: Theme.of(context).colorScheme.surface, child: Row(
+      bottomNavigationBar: Container(padding: EdgeInsets.symmetric(horizontal: 12), color: Theme.of(context).colorScheme.surface, child: SafeArea(child: SizedBox(height: 60, child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -408,8 +405,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
             children: [
               Text(
                 "Price",
-                style: TextStyle(
-                  color: Colors.white.withOpacity(.6),
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                 ),
@@ -427,10 +423,10 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                     s ? widget.coffee.price.toString()
                         : m ? widget.coffee.mediumPrice.toString()
                         : widget.coffee.largePrice.toString(),
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
+                      color: AppColors.caramelBrown
                     ),
                   ),
                 ],
@@ -438,10 +434,25 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
             ],
           ),
           CupertinoButton.filled(onPressed: () {
-
-          }, child: Text("Buy Now".tr)),
+            showBiometricDialog(context, (index) {
+              if(index == 1) {
+                runZonedGuarded((){
+                  showLoading();
+                  Get.find<AccountController>().sendUsdt(amount: widget.coffee.price).then((res){
+                    closeLoading();
+                    if(res != null) {
+                      showSnackMessage("Successfully!");
+                    }
+                  });
+                }, (e, s){
+                   closeLoading();
+                   showSnackMessage(e.toString());
+                });
+              }
+            });
+          }, child: Text("buyNow".tr)),
         ],
-      ), height: 60),
+      )))),
     );
   }
 

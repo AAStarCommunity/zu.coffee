@@ -88,11 +88,19 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
           width: Size.infinite.width,
           height: Size.infinite.height,
-          decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/background.png"))),
+          decoration: BoxDecoration(image: DecorationImage(opacity: .2, filterQuality: FilterQuality.low, image: AssetImage("assets/images/background.png"), fit: BoxFit.cover)),
           child: Column(children: [
+          Row(children: [
+            Text.rich(TextSpan(children: [
+              TextSpan(text: "Welcome",
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 44)),
+              TextSpan(text: "\nto Zu.Coffee",
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 24))
+            ]), textAlign: TextAlign.start)
+          ]).marginOnly(top: kToolbarHeight, bottom: 24),
           Form(key: _emailFormKey, child: TextFormField(controller: _emailCtrl, decoration: decoration, validator: (value) {
             return _validateEmail(value);
-          }).marginOnly(top: 80)),
+          })),
           if(_pinCodeVisible)Form(key: _pinCodeFormKey, child: TextFormField(controller: _pinCodeCtrl, decoration: decoration.copyWith(hintText: "captureHint".tr)).marginOnly(top: 24)),
           CupertinoButton.filled(onPressed: () {
             FocusScope.of(context).requestFocus(FocusNode());
@@ -102,12 +110,9 @@ class _LoginPageState extends State<LoginPage> {
           Text("Fall in Love with Coffee in Blissful Delight!",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 30)).marginOnly(bottom: 20),
-          Text("Welcome to Zu.Coffee, where every cup is a delightful for you.",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall),
           SizedBox(height: context.width * .1)
           // TextButton(onPressed: (){}, child: Center(child: Text("还有没有账号，去注册")))
-        ]).paddingSymmetric(horizontal: 24)),
+        ])),
     );
   }
 

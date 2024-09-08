@@ -22,7 +22,7 @@ Future<String?> getBalance(String rpcUrl, String contractAddress, String tokenAb
   return decimals ? formatUnits(response.first as BigInt, 6) : "${response.first as BigInt}";
 }
 
-Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, String paymasterUrl, Map<String, dynamic> paymasterParams, String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {int? amount, String? receiver, bool decimals = true}) async {
+Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, String paymasterUrl, Map<String, dynamic> paymasterParams, String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {num? amount, String? receiver, bool decimals = true}) async {
   final contractName = tokenAbiPath.substring(tokenAbiPath.lastIndexOf("/") + 1, tokenAbiPath.lastIndexOf("."));
   final tokenAddress = EthereumAddress.fromHex(contractAddress);
   final targetAddress = EthereumAddress.fromHex(receiver ?? aaAddress);

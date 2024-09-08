@@ -10,7 +10,7 @@ class ChangeThemePage extends GetView<ThemeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("theme".tr, style: Theme.of(context).textTheme.titleMedium)),
+        appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor, title: Text("theme".tr, style: Theme.of(context).textTheme.titleMedium)),
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Card(child: ListView.separated(itemCount: ThemeModel.themes.length, separatorBuilder: (_, __) {
           return Divider(thickness: .5, height: 0)

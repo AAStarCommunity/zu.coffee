@@ -1,3 +1,6 @@
+import 'package:HexagonWarrior/pages/account/account_controller.dart';
+import 'package:HexagonWarrior/pages/qrcode/scan_container.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -24,8 +27,12 @@ class _CoffeeListPageState extends State<CoffeeListPage> with AutomaticKeepAlive
   @override
   Widget build(BuildContext context) {
      super.build(context);
-     return SingleChildScrollView(child: Column(children: [
-       SizedBox(height: kToolbarHeight),
+     final controller = Get.find<AccountController>();
+     return Scaffold(appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor, actions: [
+        controller.obx((state){
+          return ScanActionContainer(child: Icon(CupertinoIcons.qrcode_viewfinder), sender: state?.aa ?? "").marginOnly(right: 12);
+        }, onLoading: const SizedBox())
+     ]), body: SingleChildScrollView(child: Column(children: [
        Stack(children: [
          ClipRRect(child: AspectRatio(aspectRatio: 2.34, child: Image.asset("assets/images/banner.png")), borderRadius: BorderRadius.circular(16)).paddingSymmetric(horizontal: 12),
          Positioned(child: Text("Find the best \nCoffee for you", style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.bold)), left: 32, bottom: 34),
@@ -111,16 +118,14 @@ class _CoffeeListPageState extends State<CoffeeListPage> with AutomaticKeepAlive
                        height: 20,
                      ),
                      Text(coffee.name,
-                         style: const TextStyle(
-                           color: Colors.white,
+                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                            fontSize: 20,
                          )),
                      const SizedBox(
                        height: 5,
                      ),
                      Text(coffee.mix,
-                         style: TextStyle(
-                           color: Colors.white.withOpacity(.5),
+                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
                            fontSize: 15,
                          )),
                      const SizedBox(
@@ -137,8 +142,8 @@ class _CoffeeListPageState extends State<CoffeeListPage> with AutomaticKeepAlive
                                    fontWeight: FontWeight.bold)),
                          ),
                          Text(coffee.price.toString(),
-                             style: const TextStyle(
-                               color: Colors.white,
+                             style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                               color: AppColors.caramelBrown,
                                fontWeight: FontWeight.bold,
                                fontSize: 18,
                              )),
@@ -151,7 +156,7 @@ class _CoffeeListPageState extends State<CoffeeListPage> with AutomaticKeepAlive
            );
          },
        )
-     ]));
+     ])));
   }
 
 }

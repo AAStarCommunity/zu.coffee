@@ -14,6 +14,7 @@ class ChangeLanguagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: Text("language".tr, style: Theme.of(context).textTheme.titleMedium)),
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Card(child: ListView.separated(

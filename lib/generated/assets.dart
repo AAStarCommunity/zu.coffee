@@ -91,6 +91,7 @@ class Assets {
   static const String presetIndex = 'lib/zero/userop/src/preset/index.dart';
   static const String profileMyProfile = 'lib/pages/profile/my_profile.dart';
   static const String qrcodeQrcodePage = 'lib/pages/qrcode/qrcode_page.dart';
+  static const String qrcodeScanContainer = 'lib/pages/qrcode/scan_container.dart';
   static const String qrcodeScanResultPage = 'lib/pages/qrcode/scan_result_page.dart';
   static const String requestsAssertionVerifyRequestBody = 'lib/api/requests/assertion_verify_request_body.dart';
   static const String requestsBindAccountRequest = 'lib/api/requests/bind_account_request.dart';
@@ -161,6 +162,7 @@ class Assets {
   static const String typechainSimpleAccountFactory.g = 'lib/zero/userop/src/typechain/SimpleAccountFactory.g.dart';
   static const String uiBottomNavigation = 'lib/utils/ui/bottom_navigation.dart';
   static const String uiLoadingDialog = 'lib/utils/ui/loading_dialog.dart';
+  static const String uiNetworkChecker = 'lib/utils/ui/network_checker.dart';
   static const String uiOverRepaintBoundary = 'lib/utils/ui/over_repaint_boundary.dart';
   static const String uiShowToast = 'lib/utils/ui/show_toast.dart';
   static const String useropUserop = 'lib/zero/userop/userop.dart';

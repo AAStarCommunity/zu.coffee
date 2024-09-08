@@ -35,12 +35,12 @@ void main() async{
     return await SharedPreferences.getInstance();
   }, permanent: true);
 
-  if (Platform.isAndroid) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
-        statusBarIconBrightness: Brightness.light,
-        statusBarColor: Colors.transparent
-    ));
-  }
+  // if (Platform.isAndroid) {
+  //   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+  //       statusBarIconBrightness: Brightness.light,
+  //       statusBarColor: Colors.transparent
+  //   ));
+  // }
 
   runApp(const MyApp());
 }
@@ -125,7 +125,7 @@ class MyApp extends StatelessWidget {
           navigatorObservers: [GetObserver()],
           getPages: routes,
           initialRoute: MainPage.routeName,
-          themeMode: ThemeMode.dark,
+          themeMode: ThemeMode.system,
           theme: lightTheme.copyWith(useMaterial3: true),
           darkTheme: darkTheme.copyWith(useMaterial3: true),
           builder: EasyLoading.init(builder: (ctx, child){
