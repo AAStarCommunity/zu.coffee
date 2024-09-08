@@ -42,6 +42,7 @@ const zhCN = {
   "free": "免费",
   "enterAmount": "请输入金额",
   "accountEqual": "收付款账号不能为同一账户",
+  "insufficientBalance": "账户余额不足，可免费充值",
   ..._easy_refresh
 };
 

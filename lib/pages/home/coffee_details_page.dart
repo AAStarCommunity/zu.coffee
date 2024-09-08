@@ -437,6 +437,11 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
             ],
           ),
           CupertinoButton.filled(onPressed: () {
+            final balance = num.parse('${Get.find<AccountController>().state?.usdtBalance ?? 0}');
+            if(widget.coffee.price > balance) {
+              showSnackMessage("insufficientBalance".tr);
+              return;
+            }
             showBiometricDialog(context, (index) {
               if(index == 1) {
                 runZonedGuarded((){

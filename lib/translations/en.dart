@@ -41,6 +41,7 @@ const en = {
   "free": "Free",
   "enterAmount": "Please enter the transfer amount",
   "accountEqual": "Payment cannot be made with one account",
+  "insufficientBalance": "Insufficient account balance, available for free recharge",
   ..._easy_refresh
 };
 

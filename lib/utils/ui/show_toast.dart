@@ -36,7 +36,7 @@ showSnackMessage(String message) {
   }
 }
 
-Future<T?>showBiometricDialog<T>(BuildContext context, ValueChanged<int> callback) {
+Future<T?> showBiometricDialog<T>(BuildContext context, ValueChanged<int> callback) {
   return showDialog<T>(
     context: context,
     barrierDismissible: false,

@@ -30,19 +30,22 @@ class ScanResultPage extends GetView<AccountController> {
       final sender = controller.state?.aa;
       var coffee = null;
       var size = null;
+      var price = "";
       final isAddress = codeData!.startsWith("0x");
-
+      var card = null;
+      if(!isAddress) {
+        final codeMap = jsonDecode(codeData!);
+        final shareData = ShareData.fromJson(codeMap);
+        address = shareData.receiver;
+        final coffeeMap = jsonDecode(shareData.coffee);
+        coffee = Coffee.fromJson(coffeeMap);
+        final maxWidth = context.width / 2;
+        size = coffeeMap["size"];
+        price = coffee.getPrice(size);
+        card = Row(children: [CoffeeWidget(coffee: coffee, size: size, maxWidth: maxWidth, bottom: SizedBox())], mainAxisAlignment: MainAxisAlignment.center);
+      }
       return SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        if(!isAddress)LayoutBuilder(builder: (_, __){
-          final codeMap = jsonDecode(codeData!);
-          final shareData = ShareData.fromJson(codeMap);
-          address = shareData.receiver;
-          final coffeeMap = jsonDecode(shareData.coffee);
-          coffee = Coffee.fromJson(coffeeMap);
-          final maxWidth = context.width / 2;
-          size = coffeeMap["size"];
-          return Row(children: [CoffeeWidget(coffee: coffee, size: size, maxWidth: maxWidth, bottom: SizedBox())], mainAxisAlignment: MainAxisAlignment.center);
-        }),
+        if(card != null) card,
         const SizedBox(height: 20),
         Text("${"address".tr}：", style: TextStyle(fontWeight: FontWeight.w600)),
         Text("$address"),
@@ -52,7 +55,7 @@ class ScanResultPage extends GetView<AccountController> {
         const SizedBox(height: 8),
         Row(children: [
           Text("${"amount".tr}：", style: TextStyle(fontWeight: FontWeight.w600)),
-          coffee != null ? Text("${coffee.getPrice(size)} ", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16, fontWeight: FontWeight.bold)) : Expanded(child: TextField(
+          !isAddress ? Text("${price} ", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16, fontWeight: FontWeight.bold)) : Expanded(child: TextField(
             decoration: InputDecoration(hintText: "enterAmount".tr, hintStyle: TextStyle(fontSize: 12)),
             style: TextStyle(color: Theme.of(context).colorScheme.primary),
             onChanged: (v) {
@@ -64,23 +67,29 @@ class ScanResultPage extends GetView<AccountController> {
         const SizedBox(height: 24),
         ObxValue((handing){
           return Row(children: [FilledButton(onPressed: () async{
+            if(address == sender) {
+              showSnackMessage("accountEqual".tr);
+              return;
+            }
+            final amountStr = _amount.value;
+            if(!isNotNull(amountStr) || num.parse(amountStr) == 0) {
+              return;
+            }
+            final balance = num.parse('${Get.find<AccountController>().state?.usdtBalance ?? 0}');
+            final amount = num.parse(amountStr);
+            if(amount > balance) {
+              showSnackMessage("insufficientBalance".tr);
+              return;
+            }
             await showBiometricDialog(context, (index) async{
               if(index == 1) {
-                final amountStr = _amount.value;
-                if(!isNotNull(amountStr) || num.parse(amountStr) == 0) {
-                  return;
-                }
-                if(address == sender) {
-                  showSnackMessage("accountEqual".tr);
-                  return;
-                }
                 if(handing.value) {
                   toast("wait".tr);
                   return;
                 }
                 await runZonedGuarded(() async {
                   handing.value = true;
-                  final balance = await Get.find<AccountController>().sendUsdt(receiver: address, amount: num.parse(amountStr));
+                  final balance = await Get.find<AccountController>().sendUsdt(receiver: address, amount: amount);
                   handing.value = false;
                   if(isNotNull(balance)) {
                     toast("paySuccess".tr);

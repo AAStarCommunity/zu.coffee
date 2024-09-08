@@ -88,16 +88,11 @@ class Coffee {
       prefixLarge: json['prefixLarge'] as String,
     );
   }
-}
-
-extension CoffeeExt on Coffee {
 
   String getPrice(String size){
     return "${size == "S" ? price : size == "M" ? mediumPrice : largePrice}";
   }
-
 }
-
 
 final _goods = <Coffee>[];
 
